@@ -1,0 +1,5417 @@
+---
+swagger: "2.0"
+info:
+  description: "Rainbond open api"
+  version: "v1"
+  title: "Rainbond Open API"
+  termsOfService: "https://cloud.goodrain.com"
+  contact:
+    email: "barnett@goodrain.com"
+  license:
+    name: "LGPL License"
+host: "0.0.0.0:7070"
+basePath: "/"
+schemes:
+- "http"
+consumes:
+- "application/json"
+produces:
+- "application/json"
+security:
+- Bearer: []
+paths:
+  /openapi/v1/administrators:
+    get:
+      tags:
+      - "openapi-user"
+      description: "获取企业管理员列表"
+      operationId: "openapi_v1_administrators_list"
+      parameters:
+      - name: "eid"
+        in: "query"
+        description: "企业ID"
+        required: false
+        type: "string"
+        x-exportParamName: "Eid"
+        x-optionalDataType: "String"
+      - name: "page"
+        in: "query"
+        description: "页码"
+        required: false
+        type: "string"
+        x-exportParamName: "Page"
+        x-optionalDataType: "String"
+      - name: "page_size"
+        in: "query"
+        description: "每页数量"
+        required: false
+        type: "string"
+        x-exportParamName: "PageSize"
+        x-optionalDataType: "String"
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/ListUsersRespView"
+    post:
+      tags:
+      - "openapi-user"
+      description: "添加企业用户"
+      operationId: "openapi_v1_administrators_create"
+      parameters:
+      - in: "body"
+        name: "data"
+        required: true
+        schema:
+          $ref: "#/definitions/CreateAdminUserReq"
+        x-exportParamName: "Data"
+      responses: {}
+  /openapi/v1/announcements:
+    get:
+      tags:
+      - "openapi-announcement"
+      description: "获取站内信列表"
+      operationId: "openapi_v1_announcements_list"
+      parameters:
+      - name: "page"
+        in: "query"
+        description: "页码"
+        required: false
+        type: "string"
+        x-exportParamName: "Page"
+        x-optionalDataType: "String"
+      - name: "page_size"
+        in: "query"
+        description: "每页数量"
+        required: false
+        type: "string"
+        x-exportParamName: "PageSize"
+        x-optionalDataType: "String"
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/ListAnnouncementResp"
+    post:
+      tags:
+      - "openapi-announcement"
+      description: "添加站内信"
+      operationId: "openapi_v1_announcements_create"
+      parameters:
+      - in: "body"
+        name: "data"
+        required: true
+        schema:
+          $ref: "#/definitions/CreateAncmReqSerilizer"
+        x-exportParamName: "Data"
+      responses: {}
+  /openapi/v1/announcements/{aid}:
+    put:
+      tags:
+      - "openapi-announcement"
+      description: "更新站内信"
+      operationId: "openapi_v1_announcements_update"
+      parameters:
+      - name: "aid"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "Aid"
+      - in: "body"
+        name: "data"
+        required: true
+        schema:
+          $ref: "#/definitions/UpdateAncmReqSerilizer"
+        x-exportParamName: "Data"
+      responses: {}
+    delete:
+      tags:
+      - "openapi-announcement"
+      description: "删除站内信"
+      operationId: "openapi_v1_announcements_delete"
+      parameters:
+      - name: "aid"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "Aid"
+      responses: {}
+  /openapi/v1/appstores:
+    get:
+      tags:
+      - "openapi-appstore"
+      description: "获取应用市场信息列表"
+      operationId: "openapi_v1_appstores_list"
+      parameters:
+      - name: "query"
+        in: "query"
+        description: "按企业名称, 企业别名搜索"
+        required: false
+        type: "string"
+        x-exportParamName: "Query"
+        x-optionalDataType: "String"
+      - name: "page"
+        in: "query"
+        description: "页码"
+        required: false
+        type: "string"
+        x-exportParamName: "Page"
+        x-optionalDataType: "String"
+      - name: "page_size"
+        in: "query"
+        description: "每页数量"
+        required: false
+        type: "string"
+        x-exportParamName: "PageSize"
+        x-optionalDataType: "String"
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/ListAppStoreInfosResp"
+  /openapi/v1/appstores/{eid}:
+    put:
+      tags:
+      - "openapi-appstore"
+      description: "修改应用市场信息"
+      operationId: "openapi_v1_appstores_update"
+      parameters:
+      - name: "eid"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "Eid"
+      - in: "body"
+        name: "data"
+        required: true
+        schema:
+          $ref: "#/definitions/UpdAppStoreInfoReq"
+        x-exportParamName: "Data"
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/AppStoreInfo"
+        404:
+          schema:
+            $ref: "#/definitions/Fail"
+  /openapi/v1/auth-token:
+    post:
+      tags:
+      - "openapi-auth"
+      description: "企业管理员账号密码获取API-Token"
+      operationId: "openapi_v1_auth-token_create"
+      parameters:
+      - in: "body"
+        name: "data"
+        required: true
+        schema:
+          $ref: "#/definitions/AuthRequest"
+        x-exportParamName: "Data"
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/Token"
+        400:
+          schema:
+            $ref: "#/definitions/Fail"
+        404:
+          schema:
+            $ref: "#/definitions/Fail"
+  /openapi/v1/configs:
+    get:
+      tags:
+      - "openapi-entreprise"
+      description: "获取企业配置信息"
+      operationId: "openapi_v1_configs_list"
+      parameters: []
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/EnterpriseConfigSeralizer"
+  /openapi/v1/enterprises:
+    get:
+      tags:
+      - "openapi-entreprise"
+      description: "获取企业列表"
+      operationId: "openapi_v1_enterprises_list"
+      parameters:
+      - name: "query"
+        in: "query"
+        description: "按企业名称, 企业别名搜索"
+        required: false
+        type: "string"
+        x-exportParamName: "Query"
+        x-optionalDataType: "String"
+      - name: "page"
+        in: "query"
+        description: "页码"
+        required: false
+        type: "string"
+        x-exportParamName: "Page"
+        x-optionalDataType: "String"
+      - name: "page_size"
+        in: "query"
+        description: "每页数量"
+        required: false
+        type: "string"
+        x-exportParamName: "PageSize"
+        x-optionalDataType: "String"
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/ListEntsResp"
+  /openapi/v1/enterprises/{eid}:
+    get:
+      tags:
+      - "openapi-entreprise"
+      description: "获取企业信息"
+      operationId: "openapi_v1_enterprises_read"
+      parameters:
+      - name: "eid"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "Eid"
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/EnterpriseInfo"
+    put:
+      tags:
+      - "openapi-entreprise"
+      description: "更新企业信息"
+      operationId: "openapi_v1_enterprises_update"
+      parameters:
+      - name: "eid"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "Eid"
+      - name: "eid"
+        in: "query"
+        required: true
+        type: "string"
+        maxLength: 32
+        minLength: 1
+        x-exportParamName: "Eid"
+      - name: "name"
+        in: "query"
+        required: true
+        type: "string"
+        maxLength: 64
+        minLength: 1
+        x-exportParamName: "Name"
+      - name: "alias"
+        in: "query"
+        required: true
+        type: "string"
+        maxLength: 64
+        minLength: 1
+        x-exportParamName: "Alias"
+      responses: {}
+  /openapi/v1/enterprises/{eid}/resource:
+    get:
+      tags:
+      - "openapi-entreprise"
+      description: "获取企业使用资源信息"
+      operationId: "openapi_v1_enterprises_resource_list"
+      parameters:
+      - name: "eid"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "Eid"
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/EnterpriseSource"
+  /openapi/v1/httpdomains:
+    get:
+      tags:
+      - "openapi-gateway"
+      description: "获取企业应用http访问策略列表"
+      operationId: "openapi_v1_httpdomains_list"
+      parameters:
+      - name: "auto_ssl"
+        in: "query"
+        description: "查询条件，是否为需要自动匹配证书的策略"
+        required: false
+        type: "boolean"
+        x-exportParamName: "AutoSsl"
+        x-optionalDataType: "Bool"
+      responses:
+        200:
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/EnterpriseHTTPGatewayRule"
+  /openapi/v1/oauth/type:
+    get:
+      tags:
+      - "openapi-oauth"
+      description: "获取oauth类型"
+      operationId: "openapi_v1_oauth_type_list"
+      parameters: []
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/OAuthType"
+  /openapi/v1/regions:
+    get:
+      tags:
+      - "openapi-region"
+      description: "获取全部数据中心列表"
+      operationId: "openapi_v1_regions_list"
+      parameters: []
+      responses:
+        200:
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/RegionInfoResp"
+    post:
+      tags:
+      - "openapi-region"
+      description: "添加数据中心"
+      operationId: "openapi_v1_regions_create"
+      parameters:
+      - in: "body"
+        name: "data"
+        required: true
+        schema:
+          $ref: "#/definitions/AddRegionRequest"
+        x-exportParamName: "Data"
+      responses:
+        201:
+          schema:
+            $ref: "#/definitions/RegionInfo"
+        400:
+          schema:
+            $ref: "#/definitions/Fail"
+  /openapi/v1/regions/{region_id}:
+    get:
+      tags:
+      - "openapi-region"
+      description: "获取指定数据中心数据"
+      operationId: "openapi_v1_regions_read"
+      parameters:
+      - name: "region_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "RegionId"
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/RegionInfo"
+        404:
+          schema:
+            $ref: "#/definitions/Fail"
+    put:
+      tags:
+      - "openapi-region"
+      description: "更新指定数据中心元数据"
+      operationId: "openapi_v1_regions_update"
+      parameters:
+      - name: "region_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "RegionId"
+      - in: "body"
+        name: "data"
+        required: true
+        schema:
+          $ref: "#/definitions/UpdateRegionReq"
+        x-exportParamName: "Data"
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/RegionInfo"
+        400:
+          schema:
+            $ref: "#/definitions/Fail"
+        404:
+          schema:
+            $ref: "#/definitions/Fail"
+    delete:
+      tags:
+      - "openapi-region"
+      description: "删除指定数据中心元数据"
+      operationId: "openapi_v1_regions_delete"
+      parameters:
+      - name: "region_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "RegionId"
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/RegionInfo"
+        404:
+          schema:
+            $ref: "#/definitions/Fail"
+  /openapi/v1/regions/{region_id}/status:
+    put:
+      tags:
+      - "openapi-region"
+      description: "修改数据中心的状态(上线, 下线, 设为维护)"
+      operationId: "openapi_v1_regions_status_update"
+      parameters:
+      - name: "region_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "RegionId"
+      - in: "body"
+        name: "data"
+        required: true
+        schema:
+          $ref: "#/definitions/UpdateRegionStatusReq"
+        x-exportParamName: "Data"
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/RegionInfo"
+        400:
+          schema:
+            $ref: "#/definitions/Fail"
+        404:
+          schema:
+            $ref: "#/definitions/Fail"
+  /openapi/v1/teams:
+    get:
+      tags:
+      - "openapi-team"
+      description: "获取用户所在团队列表"
+      operationId: "openapi_v1_teams_list"
+      parameters:
+      - name: "query"
+        in: "query"
+        description: "团队名称搜索"
+        required: false
+        type: "string"
+        x-exportParamName: "Query"
+        x-optionalDataType: "String"
+      - name: "page"
+        in: "query"
+        description: "页码"
+        required: false
+        type: "string"
+        x-exportParamName: "Page"
+        x-optionalDataType: "String"
+      - name: "page_size"
+        in: "query"
+        description: "每页数量"
+        required: false
+        type: "string"
+        x-exportParamName: "PageSize"
+        x-optionalDataType: "String"
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/ListTeamResp"
+    post:
+      tags:
+      - "openapi-team"
+      description: "add team"
+      operationId: "openapi_v1_teams_create"
+      parameters:
+      - in: "body"
+        name: "data"
+        required: true
+        schema:
+          $ref: "#/definitions/CreateTeamReq"
+        x-exportParamName: "Data"
+      responses:
+        201:
+          schema:
+            $ref: "#/definitions/TeamBaseInfo"
+  /openapi/v1/teams/{team_id}:
+    get:
+      tags:
+      - "openapi-team"
+      description: "获取团队"
+      operationId: "openapi_v1_teams_read"
+      parameters:
+      - name: "team_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "TeamId"
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/TeamInfo"
+    put:
+      tags:
+      - "openapi-team"
+      description: "更新团队信息"
+      operationId: "openapi_v1_teams_update"
+      parameters:
+      - name: "team_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "TeamId"
+      - in: "body"
+        name: "data"
+        required: true
+        schema:
+          $ref: "#/definitions/UpdateTeamInfoReq"
+        x-exportParamName: "Data"
+      responses: {}
+    delete:
+      tags:
+      - "openapi-team"
+      description: "删除团队"
+      operationId: "openapi_v1_teams_delete"
+      parameters:
+      - name: "team_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "TeamId"
+      responses: {}
+  /openapi/v1/teams/{team_id}/certificates:
+    get:
+      tags:
+      - "openapi-team"
+      description: "获取团队下证书列表"
+      operationId: "openapi_v1_teams_certificates_list"
+      parameters:
+      - name: "team_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "TeamId"
+      - name: "page"
+        in: "query"
+        description: "页码"
+        required: false
+        type: "number"
+        x-exportParamName: "Page"
+        x-optionalDataType: "Float32"
+      - name: "page_size"
+        in: "query"
+        description: "每页数量"
+        required: false
+        type: "number"
+        x-exportParamName: "PageSize"
+        x-optionalDataType: "Float32"
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/TeamCertificatesL"
+    post:
+      tags:
+      - "openapi-team"
+      description: "添加证书"
+      operationId: "openapi_v1_teams_certificates_create"
+      parameters:
+      - name: "team_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "TeamId"
+      - in: "body"
+        name: "data"
+        required: true
+        schema:
+          $ref: "#/definitions/TeamCertificatesC"
+        x-exportParamName: "Data"
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/TeamCertificatesR"
+  /openapi/v1/teams/{team_id}/certificates/{certificate_id}:
+    get:
+      tags:
+      - "openapi-team"
+      description: "获取团队下证书列表"
+      operationId: "openapi_v1_teams_certificates_read"
+      parameters:
+      - name: "certificate_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "CertificateId"
+      - name: "team_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "TeamId"
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/TeamCertificatesR"
+    put:
+      tags:
+      - "openapi-team"
+      description: "更新证书"
+      operationId: "openapi_v1_teams_certificates_update"
+      parameters:
+      - name: "certificate_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "CertificateId"
+      - name: "team_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "TeamId"
+      - in: "body"
+        name: "data"
+        required: true
+        schema:
+          $ref: "#/definitions/TeamCertificatesC"
+        x-exportParamName: "Data"
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/TeamCertificatesR"
+    delete:
+      tags:
+      - "openapi-team"
+      description: "删除证书"
+      operationId: "openapi_v1_teams_certificates_delete"
+      parameters:
+      - name: "certificate_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "CertificateId"
+      - name: "team_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "TeamId"
+      responses: {}
+  /openapi/v1/teams/{team_id}/regions:
+    get:
+      tags:
+      - "openapi-team-region"
+      description: "获取团队开通的数据中心列表"
+      operationId: "openapi_v1_teams_regions_list"
+      parameters:
+      - name: "team_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "TeamId"
+      - name: "query"
+        in: "query"
+        description: "根据数据中心名称搜索"
+        required: false
+        type: "string"
+        x-exportParamName: "Query"
+        x-optionalDataType: "String"
+      - name: "page"
+        in: "query"
+        description: "页码"
+        required: false
+        type: "string"
+        x-exportParamName: "Page"
+        x-optionalDataType: "String"
+      - name: "page_size"
+        in: "query"
+        description: "每页数量"
+        required: false
+        type: "string"
+        x-exportParamName: "PageSize"
+        x-optionalDataType: "String"
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/ListTeamRegionsResp"
+    post:
+      tags:
+      - "openapi-team-region"
+      description: "开通数据中心"
+      operationId: "openapi_v1_teams_regions_create"
+      parameters:
+      - name: "team_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "TeamId"
+      - in: "body"
+        name: "data"
+        required: true
+        schema:
+          $ref: "#/definitions/TeamRegionReq"
+        x-exportParamName: "Data"
+      responses:
+        201:
+          schema:
+            $ref: "#/definitions/TeamBaseInfo"
+  /openapi/v1/teams/{team_id}/regions/{region_name}:
+    delete:
+      tags:
+      - "openapi-team-region"
+      description: "关闭数据中心"
+      operationId: "openapi_v1_teams_regions_delete"
+      parameters:
+      - name: "region_name"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "RegionName"
+      - name: "team_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "TeamId"
+      responses: {}
+  /openapi/v1/teams/{team_id}/regions/{region_name}/apps:
+    get:
+      tags:
+      - "openapi-apps"
+      description: "团队应用列表"
+      operationId: "openapi_v1_teams_regions_apps_list"
+      parameters:
+      - name: "region_name"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "RegionName"
+      - name: "team_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "TeamId"
+      - name: "query"
+        in: "query"
+        description: "搜索查询应用名称，团队名称"
+        required: false
+        type: "string"
+        x-exportParamName: "Query"
+        x-optionalDataType: "String"
+      responses:
+        200:
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/AppBaseInfo"
+    post:
+      tags:
+      - "openapi-apps"
+      description: "创建应用"
+      operationId: "openapi_v1_teams_regions_apps_create"
+      parameters:
+      - name: "region_name"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "RegionName"
+      - name: "team_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "TeamId"
+      - in: "body"
+        name: "data"
+        required: true
+        schema:
+          $ref: "#/definitions/AppPostInfo"
+        x-exportParamName: "Data"
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/AppBaseInfo"
+  /openapi/v1/teams/{team_id}/regions/{region_name}/apps/close:
+    post:
+      tags:
+      - "openapi-apps"
+      description: "批量关闭应用"
+      operationId: "openapi_v1_teams_regions_apps_close_create"
+      parameters:
+      - name: "region_name"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "RegionName"
+      - name: "team_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "TeamId"
+      - in: "body"
+        name: "data"
+        required: true
+        schema:
+          $ref: "#/definitions/TeamAppsCloseSerializers"
+        x-exportParamName: "Data"
+      responses: {}
+  /openapi/v1/teams/{team_id}/regions/{region_name}/apps/{app_id}:
+    get:
+      tags:
+      - "openapi-apps"
+      description: "应用详情"
+      operationId: "openapi_v1_teams_regions_apps_read"
+      parameters:
+      - name: "app_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "AppId"
+      - name: "region_name"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "RegionName"
+      - name: "team_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "TeamId"
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/AppInfo"
+    delete:
+      tags:
+      - "openapi-apps"
+      description: "删除应用"
+      operationId: "openapi_v1_teams_regions_apps_delete"
+      parameters:
+      - name: "app_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "AppId"
+      - name: "region_name"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "RegionName"
+      - name: "team_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "TeamId"
+      - name: "force"
+        in: "query"
+        description: "强制删除"
+        required: false
+        type: "integer"
+        enum:
+        - 0
+        - 1
+        x-exportParamName: "Force"
+        x-optionalDataType: "Int32"
+      responses: {}
+  /openapi/v1/teams/{team_id}/regions/{region_name}/apps/{app_id}/copy:
+    get:
+      tags:
+      - "openapi-apps"
+      description: "获取需要复制的应用组件信息"
+      operationId: "openapi_v1_teams_regions_apps_copy_list"
+      parameters:
+      - name: "app_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "AppId"
+      - name: "region_name"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "RegionName"
+      - name: "team_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "TeamId"
+      responses:
+        200:
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/AppCopyL"
+    post:
+      tags:
+      - "openapi-apps"
+      description: "复制应用"
+      operationId: "openapi_v1_teams_regions_apps_copy_create"
+      parameters:
+      - name: "app_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "AppId"
+      - name: "region_name"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "RegionName"
+      - name: "team_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "TeamId"
+      - in: "body"
+        name: "data"
+        required: true
+        schema:
+          $ref: "#/definitions/AppCopyC"
+        x-exportParamName: "Data"
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/AppCopyCRes"
+  /openapi/v1/teams/{team_id}/regions/{region_name}/apps/{app_id}/httpdomains:
+    get:
+      tags:
+      - "openapi-gateway"
+      description: "获取应用http访问策略列表"
+      operationId: "openapi_v1_teams_regions_apps_httpdomains_list"
+      parameters:
+      - name: "app_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "AppId"
+      - name: "region_name"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "RegionName"
+      - name: "team_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "TeamId"
+      responses:
+        200:
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/HTTPGatewayRule"
+    post:
+      tags:
+      - "openapi-apps"
+      description: "创建HTTP网关策略"
+      operationId: "openapi_v1_teams_regions_apps_httpdomains_create"
+      parameters:
+      - name: "app_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "AppId"
+      - name: "region_name"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "RegionName"
+      - name: "team_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "TeamId"
+      - in: "body"
+        name: "data"
+        required: true
+        schema:
+          $ref: "#/definitions/PostHTTPGatewayRule"
+        x-exportParamName: "Data"
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/HTTPGatewayRule"
+  /openapi/v1/teams/{team_id}/regions/{region_name}/apps/{app_id}/httpdomains/{rule_id}:
+    put:
+      tags:
+      - "openapi-gateway"
+      description: "更新HTTP访问策略"
+      operationId: "openapi_v1_teams_regions_apps_httpdomains_update"
+      parameters:
+      - name: "app_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "AppId"
+      - name: "region_name"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "RegionName"
+      - name: "rule_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "RuleId"
+      - name: "team_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "TeamId"
+      - in: "body"
+        name: "data"
+        required: true
+        schema:
+          $ref: "#/definitions/UpdatePostHTTPGatewayRule"
+        x-exportParamName: "Data"
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/HTTPGatewayRule"
+    delete:
+      tags:
+      - "openapi-gateway"
+      description: "删除HTTP访问策略"
+      operationId: "openapi_v1_teams_regions_apps_httpdomains_delete"
+      parameters:
+      - name: "app_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "AppId"
+      - name: "region_name"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "RegionName"
+      - name: "rule_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "RuleId"
+      - name: "team_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "TeamId"
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/HTTPGatewayRule"
+  /openapi/v1/teams/{team_id}/regions/{region_name}/apps/{app_id}/install:
+    post:
+      tags:
+      - "openapi-apps"
+      description: "安装云市应用"
+      operationId: "openapi_v1_teams_regions_apps_install_create"
+      parameters:
+      - name: "app_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "AppId"
+      - name: "region_name"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "RegionName"
+      - name: "team_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "TeamId"
+      - in: "body"
+        name: "data"
+        required: true
+        schema:
+          $ref: "#/definitions/Install"
+        x-exportParamName: "Data"
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/AppInfo"
+  /openapi/v1/teams/{team_id}/regions/{region_name}/apps/{app_id}/operations:
+    post:
+      tags:
+      - "openapi-apps"
+      description: "操作应用"
+      operationId: "openapi_v1_teams_regions_apps_operations_create"
+      parameters:
+      - name: "app_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "AppId"
+      - name: "region_name"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "RegionName"
+      - name: "team_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "TeamId"
+      - in: "body"
+        name: "data"
+        required: true
+        schema:
+          $ref: "#/definitions/ServiceGroupOperations"
+        x-exportParamName: "Data"
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/Success"
+        400:
+          schema:
+            $ref: "#/definitions/Fail"
+        404:
+          schema:
+            $ref: "#/definitions/Fail"
+  /openapi/v1/teams/{team_id}/regions/{region_name}/apps/{app_id}/services:
+    get:
+      tags:
+      - "openapi-apps"
+      description: "查询应用下组件列表"
+      operationId: "openapi_v1_teams_regions_apps_services_list"
+      parameters:
+      - name: "app_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "AppId"
+      - name: "region_name"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "RegionName"
+      - name: "team_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "TeamId"
+      responses:
+        200:
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ServiceBaseInfo"
+  /openapi/v1/teams/{team_id}/regions/{region_name}/apps/{app_id}/services/{service_id}:
+    get:
+      tags:
+      - "openapi-apps"
+      description: "查询组件信息"
+      operationId: "openapi_v1_teams_regions_apps_services_read"
+      parameters:
+      - name: "app_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "AppId"
+      - name: "region_name"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "RegionName"
+      - name: "service_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "ServiceId"
+      - name: "team_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "TeamId"
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/ServiceBaseInfo"
+    delete:
+      tags:
+      - "openapi-apps"
+      description: "删除组件"
+      operationId: "openapi_v1_teams_regions_apps_services_delete"
+      parameters:
+      - name: "app_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "AppId"
+      - name: "region_name"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "RegionName"
+      - name: "service_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "ServiceId"
+      - name: "team_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "TeamId"
+      - name: "force"
+        in: "query"
+        description: "强制删除"
+        required: false
+        type: "integer"
+        enum:
+        - 0
+        - 1
+        x-exportParamName: "Force"
+        x-optionalDataType: "Int32"
+      responses: {}
+  /openapi/v1/teams/{team_id}/regions/{region_name}/apps/{app_id}/services/{service_id}/events:
+    get:
+      tags:
+      - "openapi-apps"
+      description: "查询组件事件信息"
+      operationId: "openapi_v1_teams_regions_apps_services_events_list"
+      parameters:
+      - name: "app_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "AppId"
+      - name: "region_name"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "RegionName"
+      - name: "service_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "ServiceId"
+      - name: "team_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "TeamId"
+      - name: "page"
+        in: "query"
+        description: "页码"
+        required: false
+        type: "integer"
+        x-exportParamName: "Page"
+        x-optionalDataType: "Int32"
+      - name: "page_size"
+        in: "query"
+        description: "每页数量"
+        required: false
+        type: "integer"
+        x-exportParamName: "PageSize"
+        x-optionalDataType: "Int32"
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/ListServiceEventsResponse"
+  /openapi/v1/teams/{team_id}/regions/{region_name}/resource:
+    get:
+      tags:
+      - "openapi-apps"
+      description: "获取团队资源统计"
+      operationId: "openapi_v1_teams_regions_resource_list"
+      parameters:
+      - name: "region_name"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "RegionName"
+      - name: "team_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "TeamId"
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/TeamAppsResource"
+  /openapi/v1/teams/{team_id}/regions/{region_name}/services:
+    get:
+      tags:
+      - "openapi-team"
+      description: "获取团队下指定数据中心组件信息"
+      operationId: "openapi_v1_teams_regions_services_list"
+      parameters:
+      - name: "region_name"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "RegionName"
+      - name: "team_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "TeamId"
+      - name: "eid"
+        in: "query"
+        description: "根据数据中心名称搜索"
+        required: false
+        type: "string"
+        x-exportParamName: "Eid"
+        x-optionalDataType: "String"
+      - name: "team_name"
+        in: "query"
+        description: "根据数据中心名称搜索"
+        required: false
+        type: "string"
+        x-exportParamName: "TeamName"
+        x-optionalDataType: "String"
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/ListRegionTeamServices"
+    delete:
+      tags:
+      - "openapi"
+      operationId: "openapi_v1_teams_regions_services_delete"
+      parameters:
+      - name: "region_name"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "RegionName"
+      - name: "team_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "TeamId"
+      responses:
+        204: {}
+  /openapi/v1/teams/{team_id}/users:
+    get:
+      tags:
+      - "openapi-team"
+      description: "获取团队用户列表"
+      operationId: "openapi_v1_teams_users_list"
+      parameters:
+      - name: "team_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "TeamId"
+      - name: "query"
+        in: "query"
+        description: "用户名、邮箱、手机号搜索"
+        required: false
+        type: "string"
+        x-exportParamName: "Query"
+        x-optionalDataType: "String"
+      - name: "page"
+        in: "query"
+        description: "页码"
+        required: false
+        type: "string"
+        x-exportParamName: "Page"
+        x-optionalDataType: "String"
+      - name: "page_size"
+        in: "query"
+        description: "每页数量"
+        required: false
+        type: "string"
+        x-exportParamName: "PageSize"
+        x-optionalDataType: "String"
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/ListTeamUsersResp"
+  /openapi/v1/teams/{team_id}/users/{user_id}:
+    post:
+      tags:
+      - "openapi-team"
+      description: "add team user"
+      operationId: "openapi_v1_teams_users_create"
+      parameters:
+      - name: "team_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "TeamId"
+      - name: "user_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "UserId"
+      - in: "body"
+        name: "data"
+        required: true
+        schema:
+          $ref: "#/definitions/CreateTeamUserReq"
+        x-exportParamName: "Data"
+      responses: {}
+    put:
+      tags:
+      - "openapi-team"
+      description: "update team user"
+      operationId: "openapi_v1_teams_users_update"
+      parameters:
+      - name: "team_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "TeamId"
+      - name: "user_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "UserId"
+      - in: "body"
+        name: "data"
+        required: true
+        schema:
+          $ref: "#/definitions/CreateTeamUserReq"
+        x-exportParamName: "Data"
+      responses:
+        404:
+          schema:
+            $ref: "#/definitions/Fail"
+    delete:
+      tags:
+      - "openapi-team"
+      description: "将用户从团队中移除"
+      operationId: "openapi_v1_teams_users_delete"
+      parameters:
+      - name: "team_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "TeamId"
+      - name: "user_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "UserId"
+      responses:
+        404:
+          schema:
+            $ref: "#/definitions/Fail"
+  /openapi/v1/upload-file:
+    post:
+      tags:
+      - "openapi-upload"
+      description: "上传文件"
+      operationId: "openapi_v1_upload-file_create"
+      consumes:
+      - "multipart/form-data"
+      parameters:
+      - name: "file"
+        in: "formData"
+        description: "文件"
+        required: false
+        type: "file"
+        x-exportParamName: "File"
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/UploadFileResp"
+  /openapi/v1/user/changepwd:
+    put:
+      tags:
+      - "openapi-user"
+      description: "修改用户密码"
+      operationId: "openapi_v1_user_changepwd_update"
+      parameters:
+      - in: "body"
+        name: "data"
+        required: true
+        schema:
+          $ref: "#/definitions/ChangePassWdUser"
+        x-exportParamName: "Data"
+      responses: {}
+  /openapi/v1/users:
+    get:
+      tags:
+      - "openapi-user"
+      description: "获取用户列表"
+      operationId: "openapi_v1_users_list"
+      parameters:
+      - name: "query"
+        in: "query"
+        description: "用户名、邮箱、手机号搜索"
+        required: false
+        type: "string"
+        x-exportParamName: "Query"
+        x-optionalDataType: "String"
+      - name: "page"
+        in: "query"
+        description: "页码"
+        required: false
+        type: "string"
+        x-exportParamName: "Page"
+        x-optionalDataType: "String"
+      - name: "page_size"
+        in: "query"
+        description: "每页数量"
+        required: false
+        type: "string"
+        x-exportParamName: "PageSize"
+        x-optionalDataType: "String"
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/ListUsersRespView"
+    post:
+      tags:
+      - "openapi-user"
+      description: "添加普通用户"
+      operationId: "openapi_v1_users_create"
+      parameters:
+      - in: "body"
+        name: "data"
+        required: true
+        schema:
+          $ref: "#/definitions/CreateUser"
+        x-exportParamName: "Data"
+      responses: {}
+  /openapi/v1/users/{user_id}:
+    get:
+      tags:
+      - "openapi-user"
+      description: "根据用户ID获取用户信息"
+      operationId: "openapi_v1_users_read"
+      parameters:
+      - name: "user_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "UserId"
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/UserInfo"
+    put:
+      tags:
+      - "openapi-user"
+      description: "更新用户信息"
+      operationId: "openapi_v1_users_update"
+      parameters:
+      - name: "user_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "UserId"
+      - in: "body"
+        name: "data"
+        required: true
+        schema:
+          $ref: "#/definitions/UpdateUser"
+        x-exportParamName: "Data"
+      responses: {}
+    delete:
+      tags:
+      - "openapi-user"
+      description: "删除用户"
+      operationId: "openapi_v1_users_delete"
+      parameters:
+      - name: "user_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "UserId"
+      responses: {}
+  /openapi/v1/users/{user_id}/administrator:
+    delete:
+      tags:
+      - "openapi-user"
+      description: "删除企业管理员"
+      operationId: "openapi_v1_users_administrator_delete"
+      parameters:
+      - name: "user_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "UserId"
+      responses:
+        400:
+          schema:
+            $ref: "#/definitions/Fail"
+        404:
+          schema:
+            $ref: "#/definitions/Fail"
+  /openapi/v1/users/{user_id}/teams:
+    get:
+      tags:
+      - "openapi-user"
+      description: "获取用户的团队列表"
+      operationId: "openapi_v1_users_teams_list"
+      parameters:
+      - name: "user_id"
+        in: "path"
+        required: true
+        type: "string"
+        x-exportParamName: "UserId"
+      - name: "eid"
+        in: "query"
+        description: "企业ID"
+        required: false
+        type: "string"
+        x-exportParamName: "Eid"
+        x-optionalDataType: "String"
+      - name: "query"
+        in: "query"
+        description: "团队名称搜索"
+        required: false
+        type: "string"
+        x-exportParamName: "Query"
+        x-optionalDataType: "String"
+      - name: "page"
+        in: "query"
+        description: "页码"
+        required: false
+        type: "string"
+        x-exportParamName: "Page"
+        x-optionalDataType: "String"
+      - name: "page_size"
+        in: "query"
+        description: "每页数量"
+        required: false
+        type: "string"
+        x-exportParamName: "PageSize"
+        x-optionalDataType: "String"
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/ListTeamResp"
+securityDefinitions:
+  Bearer:
+    type: "apiKey"
+    name: "Authorization"
+    in: "header"
+definitions:
+  AnnouncementRespSerilizer:
+    type: "object"
+    properties:
+      a_tag:
+        type: "string"
+        description: "A标签文字"
+        title: "A tag"
+        minLength: 0
+        maxLength: 256
+      a_tag_url:
+        type: "string"
+        description: "a标签跳转地址"
+        title: "A tag url"
+        minLength: 0
+        maxLength: 1024
+      active:
+        type: "boolean"
+        description: "通知是否启用"
+        title: "Active"
+      announcement_id:
+        type: "string"
+        description: "通知唯一标识"
+        title: "Announcement id"
+        minLength: 0
+        maxLength: 32
+      content:
+        type: "string"
+        description: "通知内容"
+        title: "Content"
+        minLength: 0
+        maxLength: 1000
+      level:
+        type: "string"
+        description: "通知的等级"
+        title: "Level"
+        minLength: 0
+        maxLength: 32
+      title:
+        type: "string"
+        description: "通知标题"
+        title: "Title"
+        minLength: 0
+        maxLength: 64
+      type:
+        type: "string"
+        description: "通知类型"
+        title: "Type"
+        minLength: 0
+        maxLength: 15
+    example:
+      a_tag_url: "a_tag_url"
+      level: "level"
+      active: true
+      announcement_id: "announcement_id"
+      title: "title"
+      type: "type"
+      content: "content"
+      a_tag: "a_tag"
+  AppBaseInfo:
+    type: "object"
+    required:
+    - "group_name"
+    - "region_name"
+    - "tenant_id"
+    properties:
+      ID:
+        type: "integer"
+        title: "ID"
+        readOnly: true
+      group_name:
+        type: "string"
+        description: "组名"
+        title: "Group name"
+        minLength: 1
+        maxLength: 128
+      is_default:
+        type: "boolean"
+        description: "默认组件"
+        title: "Is default"
+      note:
+        type: "string"
+        description: "备注"
+        title: "Note"
+        maxLength: 2048
+        x-nullable: true
+      order_index:
+        type: "integer"
+        description: "应用排序"
+        title: "Order index"
+        minimum: -2147483648
+        maximum: 2147483647
+      region_name:
+        type: "string"
+        description: "区域中心名称"
+        title: "Region name"
+        minLength: 1
+        maxLength: 64
+      tenant_id:
+        type: "string"
+        description: "租户id"
+        title: "Tenant id"
+        minLength: 1
+        maxLength: 32
+    example:
+      tenant_id: "tenant_id"
+      note: "note"
+      group_name: "group_name"
+      region_name: "region_name"
+      ID: 0
+      is_default: true
+      order_index: 441289069
+  AppCopyC:
+    type: "object"
+    required:
+    - "services"
+    - "target_app_id"
+    - "target_region_name"
+    - "target_team_name"
+    properties:
+      services:
+        type: "array"
+        items:
+          $ref: "#/definitions/AppCopyModify"
+      target_app_id:
+        type: "integer"
+        description: "应用id"
+        title: "Target app id"
+      target_region_name:
+        type: "string"
+        description: "数据中心名称"
+        title: "Target region name"
+        minLength: 1
+        maxLength: 32
+      target_team_name:
+        type: "string"
+        description: "团队名称"
+        title: "Target team name"
+        minLength: 1
+        maxLength: 32
+    example:
+      target_region_name: "target_region_name"
+      target_app_id: 0
+      services:
+      - change: "change"
+        service_id: "service_id"
+      - change: "change"
+        service_id: "service_id"
+      target_team_name: "target_team_name"
+  AppCopyCRes:
+    type: "object"
+    required:
+    - "services"
+    properties:
+      services:
+        type: "array"
+        items:
+          $ref: "#/definitions/ServiceBaseInfo"
+    example:
+      services:
+      - service_region: "service_region"
+        tenant_id: "tenant_id"
+        service_key: "service_key"
+        extend_method: "不伸缩"
+        service_alias: "service_alias"
+        min_memory: 413233370
+        check_event_id: "check_event_id"
+        service_cname: "service_cname"
+        check_uuid: "check_uuid"
+        expired_time: "2000-01-23T04:56:07.000+00:00"
+        language: "language"
+        is_service: true
+        open_webhooks: true
+        is_upgrate: true
+        update_time: "2000-01-23T04:56:07.000+00:00"
+        total_memory: 1847456234
+        min_cpu: -1517921766
+        code_version: "code_version"
+        oauth_service_id: -1158723813
+        service_id: "service_id"
+        git_url: "git_url"
+        image: "image"
+        docker_cmd: "docker_cmd"
+        service_source: "service_source"
+        create_time: "2000-01-23T04:56:07.000+00:00"
+        git_project_id: 441289069
+        service_origin: "service_origin"
+        tenant_service_group_id: 885365090
+        update_version: -594390510
+        version: "version"
+        build_upgrade: true
+        code_from: "code_from"
+        service_type: "service_type"
+        creater: -1803530559
+        create_status: "create_status"
+        cmd: "cmd"
+        category: "category"
+        min_node: 273751188
+        desc: "desc"
+        server_type: "server_type"
+        status: "status"
+      - service_region: "service_region"
+        tenant_id: "tenant_id"
+        service_key: "service_key"
+        extend_method: "不伸缩"
+        service_alias: "service_alias"
+        min_memory: 413233370
+        check_event_id: "check_event_id"
+        service_cname: "service_cname"
+        check_uuid: "check_uuid"
+        expired_time: "2000-01-23T04:56:07.000+00:00"
+        language: "language"
+        is_service: true
+        open_webhooks: true
+        is_upgrate: true
+        update_time: "2000-01-23T04:56:07.000+00:00"
+        total_memory: 1847456234
+        min_cpu: -1517921766
+        code_version: "code_version"
+        oauth_service_id: -1158723813
+        service_id: "service_id"
+        git_url: "git_url"
+        image: "image"
+        docker_cmd: "docker_cmd"
+        service_source: "service_source"
+        create_time: "2000-01-23T04:56:07.000+00:00"
+        git_project_id: 441289069
+        service_origin: "service_origin"
+        tenant_service_group_id: 885365090
+        update_version: -594390510
+        version: "version"
+        build_upgrade: true
+        code_from: "code_from"
+        service_type: "service_type"
+        creater: -1803530559
+        create_status: "create_status"
+        cmd: "cmd"
+        category: "category"
+        min_node: 273751188
+        desc: "desc"
+        server_type: "server_type"
+        status: "status"
+  AppCopyL:
+    type: "object"
+    required:
+    - "app_name"
+    - "create_status"
+    - "deploy_version"
+    - "min_memory"
+    - "service_alias"
+    - "service_cname"
+    - "service_id"
+    - "service_type"
+    - "update_time"
+    - "version"
+    properties:
+      app_name:
+        type: "string"
+        description: "应用名称"
+        title: "App name"
+        minLength: 1
+        maxLength: 64
+      build_source:
+        type: "string"
+        title: "Build source"
+        readOnly: true
+      create_status:
+        type: "string"
+        description: "创建状态"
+        title: "Create status"
+        minLength: 1
+        maxLength: 32
+      deploy_version:
+        type: "string"
+        description: "构建版本"
+        title: "Deploy version"
+        minLength: 1
+        maxLength: 32
+      min_memory:
+        type: "string"
+        description: "组件运行内存"
+        title: "Min memory"
+        minLength: 1
+        maxLength: 32
+      service_alias:
+        type: "string"
+        description: "组件昵称"
+        title: "Service alias"
+        minLength: 1
+        maxLength: 64
+      service_cname:
+        type: "string"
+        description: "组件中文名称"
+        title: "Service cname"
+        minLength: 1
+        maxLength: 128
+      service_id:
+        type: "string"
+        description: "id"
+        title: "Service id"
+        minLength: 1
+        maxLength: 32
+      service_type:
+        type: "string"
+        description: "组件类型"
+        title: "Service type"
+        minLength: 1
+        maxLength: 64
+      update_time:
+        type: "string"
+        format: "date-time"
+        description: "更新日期"
+        title: "Update time"
+      version:
+        type: "string"
+        description: "版本"
+        title: "Version"
+        minLength: 1
+        maxLength: 32
+    example:
+      app_name: "app_name"
+      service_type: "service_type"
+      update_time: "2000-01-23T04:56:07.000+00:00"
+      service_alias: "service_alias"
+      min_memory: "min_memory"
+      service_cname: "service_cname"
+      build_source: "build_source"
+      service_id: "service_id"
+      create_status: "create_status"
+      deploy_version: "deploy_version"
+      version: "version"
+  AppCopyModify:
+    type: "object"
+    required:
+    - "service_id"
+    properties:
+      change:
+        type: "string"
+        title: "Change"
+        readOnly: true
+      service_id:
+        type: "string"
+        description: "id"
+        title: "Service id"
+        minLength: 1
+        maxLength: 32
+    example:
+      change: "change"
+      service_id: "service_id"
+  AppInfo:
+    type: "object"
+    required:
+    - "app_id"
+    - "enterprise_id"
+    - "group_name"
+    - "region_name"
+    - "running_service_count"
+    - "service_count"
+    - "status"
+    - "team_name"
+    - "tenant_id"
+    - "used_cpu"
+    - "used_momory"
+    properties:
+      ID:
+        type: "integer"
+        title: "ID"
+        readOnly: true
+      app_id:
+        type: "integer"
+        description: "应用id"
+        title: "App id"
+      enterprise_id:
+        type: "string"
+        description: "企业ID(联合云ID)"
+        title: "Enterprise id"
+        minLength: 1
+        maxLength: 32
+      group_name:
+        type: "string"
+        description: "组名"
+        title: "Group name"
+        minLength: 1
+        maxLength: 128
+      is_default:
+        type: "boolean"
+        description: "默认组件"
+        title: "Is default"
+      note:
+        type: "string"
+        description: "备注"
+        title: "Note"
+        maxLength: 2048
+        x-nullable: true
+      order_index:
+        type: "integer"
+        description: "应用排序"
+        title: "Order index"
+        minimum: -2147483648
+        maximum: 2147483647
+      region_name:
+        type: "string"
+        description: "区域中心名称"
+        title: "Region name"
+        minLength: 1
+        maxLength: 64
+      running_service_count:
+        type: "integer"
+        description: "正在运行的组件数量"
+        title: "Running service count"
+      service_count:
+        type: "integer"
+        description: "组件数量"
+        title: "Service count"
+      status:
+        type: "string"
+        description: "应用状态"
+        title: "Status"
+        enum:
+        - "running"
+        - "part_running"
+        - "closed"
+      team_name:
+        type: "string"
+        description: "团队名"
+        title: "Team name"
+        minLength: 1
+        maxLength: 32
+      tenant_id:
+        type: "string"
+        description: "租户id"
+        title: "Tenant id"
+        minLength: 1
+        maxLength: 32
+      used_cpu:
+        type: "integer"
+        description: "分配的cpu"
+        title: "Used cpu"
+      used_momory:
+        type: "integer"
+        description: "分配的内存"
+        title: "Used momory"
+    example:
+      tenant_id: "tenant_id"
+      note: "note"
+      group_name: "group_name"
+      service_count: 5
+      enterprise_id: "enterprise_id"
+      is_default: true
+      order_index: -1517921766
+      running_service_count: 5
+      team_name: "team_name"
+      used_momory: 7
+      region_name: "region_name"
+      ID: 0
+      used_cpu: 2
+      app_id: 6
+      status: "running"
+  AppPostInfo:
+    type: "object"
+    required:
+    - "app_name"
+    properties:
+      app_name:
+        type: "string"
+        description: "应用名称"
+        title: "App name"
+        minLength: 1
+        maxLength: 128
+      app_note:
+        type: "string"
+        description: "应用备注"
+        title: "App note"
+        maxLength: 2048
+        default: ""
+    example:
+      app_name: "app_name"
+      app_note: "app_note"
+  AppServiceEvents:
+    type: "object"
+    required:
+    - "EndTime"
+    - "EventID"
+    - "FinalStatus"
+    - "ID"
+    - "Message"
+    - "OptType"
+    - "RequestBody"
+    - "ServiceID"
+    - "StartTime"
+    - "Status"
+    - "SynType"
+    - "Target"
+    - "TargetID"
+    - "TenantID"
+    - "UserName"
+    - "create_time"
+    properties:
+      EndTime:
+        type: "string"
+        description: "结束事件"
+        title: "Endtime"
+        minLength: 1
+        maxLength: 64
+      EventID:
+        type: "string"
+        description: "事件id"
+        title: "Eventid"
+        minLength: 1
+        maxLength: 64
+      FinalStatus:
+        type: "string"
+        description: "最终状态"
+        title: "Finalstatus"
+        minLength: 1
+        maxLength: 64
+      ID:
+        type: "string"
+        description: "记录id"
+        title: "Id"
+        minLength: 1
+        maxLength: 64
+      Message:
+        type: "string"
+        description: "日志"
+        title: "Message"
+        minLength: 1
+        maxLength: 64
+      OptType:
+        type: "string"
+        description: "事件类型"
+        title: "Opttype"
+        minLength: 1
+        maxLength: 64
+      RequestBody:
+        type: "string"
+        description: "请求参数"
+        title: "Requestbody"
+        minLength: 1
+        maxLength: 64
+      ServiceID:
+        type: "string"
+        description: "服务id"
+        title: "Serviceid"
+        minLength: 1
+        maxLength: 64
+      StartTime:
+        type: "string"
+        description: "开始时间"
+        title: "Starttime"
+        minLength: 1
+        maxLength: 64
+      Status:
+        type: "string"
+        description: "状态"
+        title: "Status"
+        minLength: 1
+        maxLength: 64
+      SynType:
+        type: "string"
+        description: "同步状态"
+        title: "Syntype"
+        minLength: 1
+        maxLength: 64
+      Target:
+        type: "string"
+        description: "操作目标类型"
+        title: "Target"
+        minLength: 1
+        maxLength: 64
+      TargetID:
+        type: "string"
+        description: "操作目标id"
+        title: "Targetid"
+        minLength: 1
+        maxLength: 64
+      TenantID:
+        type: "string"
+        description: "团队id"
+        title: "Tenantid"
+        minLength: 1
+        maxLength: 64
+      UserName:
+        type: "string"
+        description: "操作人"
+        title: "Username"
+        minLength: 1
+        maxLength: 64
+      create_time:
+        type: "string"
+        description: "创建时间"
+        title: "Create time"
+        minLength: 1
+        maxLength: 64
+    example:
+      Status: "Status"
+      UserName: "UserName"
+      EndTime: "EndTime"
+      Message: "Message"
+      create_time: "create_time"
+      StartTime: "StartTime"
+      TargetID: "TargetID"
+      ServiceID: "ServiceID"
+      Target: "Target"
+      TenantID: "TenantID"
+      SynType: "SynType"
+      OptType: "OptType"
+      EventID: "EventID"
+      ID: "ID"
+      FinalStatus: "FinalStatus"
+      RequestBody: "RequestBody"
+  AppStoreImageHubBaseResp:
+    type: "object"
+    properties:
+      enable:
+        type: "boolean"
+        title: "Enable"
+        default: false
+      value:
+        $ref: "#/definitions/AppStoreImageHubResp"
+    title: "Appstore image hub"
+    example:
+      enable: false
+      value:
+        hub_url: "hub_url"
+        hub_password: "hub_password"
+        namespace: "namespace"
+        hub_user: "hub_user"
+  AppStoreImageHubResp:
+    type: "object"
+    properties:
+      hub_password:
+        type: "string"
+        title: "Hub password"
+        maxLength: 255
+        x-nullable: true
+      hub_url:
+        type: "string"
+        title: "Hub url"
+        maxLength: 2047
+        x-nullable: true
+      hub_user:
+        type: "string"
+        title: "Hub user"
+        maxLength: 255
+        x-nullable: true
+      namespace:
+        type: "string"
+        title: "Namespace"
+        maxLength: 255
+        x-nullable: true
+    title: "Value"
+    example:
+      hub_url: "hub_url"
+      hub_password: "hub_password"
+      namespace: "namespace"
+      hub_user: "hub_user"
+  AppStoreInfo:
+    type: "object"
+    required:
+    - "access_url"
+    - "appstore_name"
+    - "enterprise_alias"
+    - "enterprise_id"
+    - "enterprise_name"
+    properties:
+      access_url:
+        type: "string"
+        description: "应用市场API地址"
+        title: "Access url"
+        minLength: 1
+      appstore_name:
+        type: "string"
+        description: "应用市场名称"
+        title: "Appstore name"
+      enterprise_alias:
+        type: "string"
+        description: "企业别名"
+        title: "Enterprise alias"
+        minLength: 1
+        maxLength: 64
+      enterprise_id:
+        type: "string"
+        description: "企业ID(联合云ID)"
+        title: "Enterprise id"
+        minLength: 1
+        maxLength: 32
+      enterprise_name:
+        type: "string"
+        description: "企业名称"
+        title: "Enterprise name"
+        minLength: 1
+        maxLength: 64
+    example:
+      enterprise_alias: "enterprise_alias"
+      appstore_name: "appstore_name"
+      access_url: "access_url"
+      enterprise_id: "enterprise_id"
+      enterprise_name: "enterprise_name"
+  AutoSSL:
+    type: "object"
+    required:
+    - "value"
+    properties:
+      enable:
+        type: "boolean"
+        title: "Enable"
+        default: false
+      value:
+        type: "string"
+        title: "Value"
+    title: "Auto ssl"
+    example:
+      enable: false
+      value: "value"
+  CertificatesR:
+    type: "object"
+    required:
+    - "alias"
+    - "certificate_type"
+    - "end_data"
+    - "has_expired"
+    - "id"
+    - "issued_by"
+    - "issued_to"
+    properties:
+      alias:
+        type: "string"
+        description: "证书名称"
+        title: "Alias"
+        minLength: 1
+        maxLength: 64
+      certificate_type:
+        type: "string"
+        description: "证书类型"
+        title: "Certificate type"
+        minLength: 1
+        maxLength: 32
+      end_data:
+        type: "string"
+        format: "date-time"
+        description: "过期时间"
+        title: "End data"
+      has_expired:
+        type: "boolean"
+        description: "是否过期"
+        title: "Has expired"
+      id:
+        type: "integer"
+        description: "id"
+        title: "Id"
+      issued_by:
+        type: "string"
+        description: "证书来源"
+        title: "Issued by"
+        minLength: 1
+        maxLength: 32
+      issued_to:
+        type: "array"
+        description: "域名列表"
+        items:
+          type: "string"
+    example:
+      has_expired: true
+      issued_by: "issued_by"
+      issued_to:
+      - "issued_to"
+      - "issued_to"
+      alias: "alias"
+      id: 0
+      certificate_type: "certificate_type"
+      end_data: "2000-01-23T04:56:07.000+00:00"
+  ChangePassWdUser:
+    type: "object"
+    required:
+    - "password"
+    - "password1"
+    - "user_id"
+    properties:
+      password:
+        type: "string"
+        description: "新密码"
+        title: "Password"
+        minLength: 8
+        maxLength: 16
+      password1:
+        type: "string"
+        description: "再次确认新密码"
+        title: "Password1"
+        minLength: 8
+        maxLength: 16
+      user_id:
+        type: "integer"
+        description: "user_id"
+        title: "User id"
+    example:
+      password: "password"
+      user_id: 0
+      password1: "password1"
+  CloudMarketBaseResp:
+    type: "object"
+    properties:
+      enable:
+        type: "boolean"
+        title: "Enable"
+        default: false
+      value:
+        type: "string"
+        title: "Value"
+        maxLength: 225
+        x-nullable: true
+    title: "Cloud market"
+    example:
+      enable: false
+      value: "value"
+  CreateAdminUserReq:
+    type: "object"
+    required:
+    - "eid"
+    - "user_id"
+    properties:
+      eid:
+        type: "string"
+        description: "企业ID"
+        title: "Eid"
+        minLength: 1
+        maxLength: 32
+      user_id:
+        type: "string"
+        description: "用户ID"
+        title: "User id"
+        minLength: 1
+        maxLength: 32
+    example:
+      eid: "eid"
+      user_id: "user_id"
+  CreateAncmReqSerilizer:
+    type: "object"
+    required:
+    - "active"
+    - "content"
+    - "level"
+    - "title"
+    - "type"
+    properties:
+      a_tag:
+        type: "string"
+        description: "A标签文字"
+        title: "A tag"
+        maxLength: 256
+      a_tag_url:
+        type: "string"
+        description: "a标签跳转地址"
+        title: "A tag url"
+        maxLength: 1024
+      active:
+        type: "boolean"
+        description: "通知是否启用"
+        title: "Active"
+      content:
+        type: "string"
+        description: "通知内容"
+        title: "Content"
+        maxLength: 1000
+      level:
+        type: "string"
+        description: "通知的等级"
+        title: "Level"
+        maxLength: 32
+      title:
+        type: "string"
+        description: "通知标题"
+        title: "Title"
+        maxLength: 64
+      type:
+        type: "string"
+        description: "通知类型"
+        title: "Type"
+        maxLength: 15
+    example:
+      a_tag_url: "a_tag_url"
+      level: "level"
+      active: true
+      title: "title"
+      type: "type"
+      content: "content"
+      a_tag: "a_tag"
+  CreateTeamReq:
+    type: "object"
+    required:
+    - "enterprise_id"
+    - "tenant_name"
+    properties:
+      creater:
+        type: "integer"
+        description: "团队所属人，未提供时默认使用登录用户作为所属人"
+        title: "Creater"
+      enterprise_id:
+        type: "string"
+        description: "团队所属企业ID,未提供时默认使用请求用户企业ID"
+        title: "Enterprise id"
+        minLength: 1
+        maxLength: 32
+      region:
+        type: "string"
+        description: "默认开通的数据中心，未指定则不开通"
+        title: "Region"
+        minLength: 1
+        maxLength: 24
+      tenant_name:
+        type: "string"
+        description: "团队名称"
+        title: "Tenant name"
+        minLength: 1
+        maxLength: 24
+    example:
+      tenant_name: "tenant_name"
+      creater: 0
+      enterprise_id: "enterprise_id"
+      region: "region"
+  CreateTeamUserReq:
+    type: "object"
+    required:
+    - "role_ids"
+    properties:
+      role_ids:
+        type: "string"
+        description: "角色ID列表"
+        title: "Role ids"
+        minLength: 1
+        maxLength: 255
+    example:
+      role_ids: "role_ids"
+  CreateUser:
+    type: "object"
+    required:
+    - "enterprise_id"
+    - "nick_name"
+    - "password"
+    properties:
+      email:
+        type: "string"
+        format: "email"
+        description: "邮件地址"
+        title: "Email"
+        minLength: 1
+        maxLength: 35
+      enterprise_id:
+        type: "string"
+        description: "enterprise_id"
+        title: "Enterprise id"
+        minLength: 1
+        maxLength: 32
+      is_active:
+        type: "boolean"
+        description: "激活状态"
+        title: "Is active"
+        default: true
+      nick_name:
+        type: "string"
+        description: "用户昵称"
+        title: "Nick name"
+        minLength: 1
+        maxLength: 24
+      origion:
+        type: "string"
+        description: "用户来源"
+        title: "Origion"
+        minLength: 1
+        maxLength: 12
+      password:
+        type: "string"
+        description: "用户昵称"
+        title: "Password"
+        minLength: 8
+        maxLength: 16
+      phone:
+        type: "string"
+        description: "手机号码"
+        title: "Phone"
+        minLength: 1
+        maxLength: 11
+    example:
+      password: "password"
+      is_active: true
+      origion: "origion"
+      phone: "phone"
+      nick_name: "nick_name"
+      enterprise_id: "enterprise_id"
+      email: "email"
+  EnterpriseConfigSeralizer:
+    type: "object"
+    properties:
+      appstore_image_hub:
+        $ref: "#/definitions/AppStoreImageHubBaseResp"
+      auto_ssl:
+        $ref: "#/definitions/AutoSSL"
+      cloud_market:
+        $ref: "#/definitions/CloudMarketBaseResp"
+      export_app:
+        $ref: "#/definitions/ExportAppBaseResp"
+      newbie_guide:
+        $ref: "#/definitions/NewBieGuideBaseResp"
+      oauth_services:
+        $ref: "#/definitions/OauthServicesBaseResp"
+      object_storage:
+        $ref: "#/definitions/ObjectStorageBaseResp"
+    example:
+      oauth_services:
+        enable: false
+        value:
+        - eid: "eid"
+          is_console: false
+          api_url: "api_url"
+          home_url: "home_url"
+          oauth_type: "oauth_type"
+          is_auto_login: false
+          is_deleted: false
+          is_git: false
+          enable: true
+          service_id: 0
+          name: "name"
+          access_token_url: "access_token_url"
+          auth_url: "auth_url"
+        - eid: "eid"
+          is_console: false
+          api_url: "api_url"
+          home_url: "home_url"
+          oauth_type: "oauth_type"
+          is_auto_login: false
+          is_deleted: false
+          is_git: false
+          enable: true
+          service_id: 0
+          name: "name"
+          access_token_url: "access_token_url"
+          auth_url: "auth_url"
+      cloud_market:
+        enable: false
+        value: "value"
+      auto_ssl:
+        enable: false
+        value: "value"
+      export_app:
+        enable: false
+        value: "value"
+      newbie_guide:
+        enable: false
+        value: "value"
+      appstore_image_hub:
+        enable: false
+        value:
+          hub_url: "hub_url"
+          hub_password: "hub_password"
+          namespace: "namespace"
+          hub_user: "hub_user"
+      object_storage:
+        enable: false
+        value:
+          secret_key: "secret_key"
+          endpoint: "endpoint"
+          provider: "provider"
+          access_key: "access_key"
+          bucket_name: "bucket_name"
+  EnterpriseHTTPGatewayRule:
+    type: "object"
+    required:
+    - "app_id"
+    - "auto_ssl_config"
+    - "domain_name"
+    - "http_rule_id"
+    - "region_id"
+    - "region_name"
+    - "service_id"
+    - "service_name"
+    - "team_name"
+    - "tenant_id"
+    properties:
+      ID:
+        type: "integer"
+        title: "ID"
+        readOnly: true
+      app_id:
+        type: "integer"
+        description: "所属应用ID"
+        title: "App id"
+      auto_ssl:
+        type: "boolean"
+        description: "是否自动匹配证书，升级为https，如果开启，由外部服务完成升级"
+        title: "Auto ssl"
+      auto_ssl_config:
+        type: "string"
+        description: "自动签发方式"
+        title: "Auto ssl config"
+        minLength: 1
+        maxLength: 32
+      certificate_id:
+        type: "integer"
+        description: "证书ID"
+        title: "Certificate id"
+        minimum: -2147483648
+        maximum: 2147483647
+      container_port:
+        type: "integer"
+        description: "容器端口"
+        title: "Container port"
+        minimum: -2147483648
+        maximum: 2147483647
+      create_time:
+        type: "string"
+        format: "date-time"
+        description: "创建时间"
+        title: "Create time"
+        readOnly: true
+      domain_cookie:
+        type: "string"
+        description: "域名cookie"
+        title: "Domain cookie"
+      domain_heander:
+        type: "string"
+        description: "域名heander"
+        title: "Domain heander"
+      domain_name:
+        type: "string"
+        description: "域名"
+        title: "Domain name"
+        minLength: 1
+        maxLength: 128
+      domain_path:
+        type: "string"
+        description: "域名path"
+        title: "Domain path"
+      domain_type:
+        type: "string"
+        description: "组件域名类型"
+        title: "Domain type"
+        minLength: 1
+        maxLength: 20
+      http_rule_id:
+        type: "string"
+        description: "http_rule_id"
+        title: "Http rule id"
+        minLength: 1
+        maxLength: 128
+      is_outer_service:
+        type: "boolean"
+        description: "是否已开启对外端口"
+        title: "Is outer service"
+      is_senior:
+        type: "boolean"
+        description: "是否有高级路由"
+        title: "Is senior"
+      protocol:
+        type: "string"
+        description: "域名类型 http https httptphttps httpandhttps"
+        title: "Protocol"
+        minLength: 1
+        maxLength: 15
+      region_id:
+        type: "string"
+        description: "region id"
+        title: "Region id"
+        minLength: 1
+        maxLength: 36
+      region_name:
+        type: "string"
+        description: "所属集群ID"
+        title: "Region name"
+        minLength: 1
+      rule_extensions:
+        type: "string"
+        description: "扩展功能"
+        title: "Rule extensions"
+      service_alias:
+        type: "string"
+        description: "组件别名"
+        title: "Service alias"
+        minLength: 1
+        maxLength: 64
+      service_id:
+        type: "string"
+        description: "组件id"
+        title: "Service id"
+        minLength: 1
+        maxLength: 32
+      service_name:
+        type: "string"
+        description: "组件名"
+        title: "Service name"
+        minLength: 1
+        maxLength: 64
+      team_name:
+        type: "string"
+        description: "所属团队唯一名称"
+        title: "Team name"
+        minLength: 1
+      tenant_id:
+        type: "string"
+        description: "租户id"
+        title: "Tenant id"
+        minLength: 1
+        maxLength: 32
+      the_weight:
+        type: "integer"
+        description: "权重"
+        title: "The weight"
+        minimum: -2147483648
+        maximum: 2147483647
+      type:
+        type: "integer"
+        description: "类型（默认：0， 自定义：1）"
+        title: "Type"
+        minimum: -2147483648
+        maximum: 2147483647
+    example:
+      tenant_id: "tenant_id"
+      container_port: 413233370
+      rule_extensions: "rule_extensions"
+      service_alias: "service_alias"
+      is_outer_service: true
+      auto_ssl_config: "auto_ssl_config"
+      type: -1158723813
+      is_senior: true
+      certificate_id: -1517921766
+      domain_name: "domain_name"
+      protocol: "protocol"
+      domain_cookie: "domain_cookie"
+      service_id: "service_id"
+      region_name: "region_name"
+      ID: 0
+      app_id: 6
+      domain_type: "domain_type"
+      create_time: "2000-01-23T04:56:07.000+00:00"
+      http_rule_id: "http_rule_id"
+      service_name: "service_name"
+      region_id: "region_id"
+      the_weight: 273751188
+      domain_heander: "domain_heander"
+      team_name: "team_name"
+      domain_path: "domain_path"
+      auto_ssl: true
+  EnterpriseInfo:
+    type: "object"
+    required:
+    - "create_time"
+    - "enterprise_alias"
+    - "enterprise_id"
+    - "enterprise_name"
+    properties:
+      create_time:
+        type: "string"
+        format: "date-time"
+        description: "创建时间"
+        title: "Create time"
+      enterprise_alias:
+        type: "string"
+        description: "企业别名"
+        title: "Enterprise alias"
+        minLength: 1
+        maxLength: 64
+      enterprise_id:
+        type: "string"
+        description: "企业ID(联合云ID)"
+        title: "Enterprise id"
+        minLength: 1
+        maxLength: 32
+      enterprise_name:
+        type: "string"
+        description: "企业名称"
+        title: "Enterprise name"
+        minLength: 1
+        maxLength: 64
+    example:
+      create_time: "2000-01-23T04:56:07.000+00:00"
+      enterprise_alias: "enterprise_alias"
+      enterprise_id: "enterprise_id"
+      enterprise_name: "enterprise_name"
+  EnterpriseSource:
+    type: "object"
+    required:
+    - "enterprise_id"
+    - "used_cpu"
+    - "used_disk"
+    - "used_memory"
+    properties:
+      enterprise_id:
+        type: "string"
+        description: "企业ID(联合云ID)"
+        title: "Enterprise id"
+        minLength: 1
+        maxLength: 32
+      used_cpu:
+        type: "number"
+        description: "使用的cpu"
+        title: "Used cpu"
+      used_disk:
+        type: "number"
+        description: "使用的存储"
+        title: "Used disk"
+      used_memory:
+        type: "number"
+        description: "使用的内存"
+        title: "Used memory"
+    example:
+      used_memory: 1.46581298050294517310021547018550336360931396484375
+      used_cpu: 0.80082819046101150206595775671303272247314453125
+      enterprise_id: "enterprise_id"
+      used_disk: 6.02745618307040320615897144307382404804229736328125
+  ExportAppBaseResp:
+    type: "object"
+    properties:
+      enable:
+        type: "boolean"
+        title: "Enable"
+        default: false
+      value:
+        type: "string"
+        title: "Value"
+        maxLength: 225
+        x-nullable: true
+    title: "Export app"
+    example:
+      enable: false
+      value: "value"
+  Fail:
+    type: "object"
+    required:
+    - "msg"
+    properties:
+      msg:
+        type: "string"
+        title: "Msg"
+        minLength: 1
+        maxLength: 300
+  HTTPGatewayRule:
+    type: "object"
+    required:
+    - "domain_name"
+    - "http_rule_id"
+    - "region_id"
+    - "service_id"
+    - "service_name"
+    - "tenant_id"
+    properties:
+      ID:
+        type: "integer"
+        title: "ID"
+        readOnly: true
+      auto_ssl:
+        type: "boolean"
+        description: "是否自动匹配证书，升级为https，如果开启，由外部服务完成升级"
+        title: "Auto ssl"
+      auto_ssl_config:
+        type: "string"
+        description: "自动分发证书配置"
+        title: "Auto ssl config"
+        maxLength: 32
+        x-nullable: true
+      certificate_id:
+        type: "integer"
+        description: "证书ID"
+        title: "Certificate id"
+        minimum: -2147483648
+        maximum: 2147483647
+      container_port:
+        type: "integer"
+        description: "容器端口"
+        title: "Container port"
+        minimum: -2147483648
+        maximum: 2147483647
+      create_time:
+        type: "string"
+        format: "date-time"
+        description: "创建时间"
+        title: "Create time"
+        readOnly: true
+      domain_cookie:
+        type: "string"
+        description: "域名cookie"
+        title: "Domain cookie"
+      domain_heander:
+        type: "string"
+        description: "域名heander"
+        title: "Domain heander"
+      domain_name:
+        type: "string"
+        description: "域名"
+        title: "Domain name"
+        minLength: 1
+        maxLength: 128
+      domain_path:
+        type: "string"
+        description: "域名path"
+        title: "Domain path"
+      domain_type:
+        type: "string"
+        description: "组件域名类型"
+        title: "Domain type"
+        minLength: 1
+        maxLength: 20
+      http_rule_id:
+        type: "string"
+        description: "http_rule_id"
+        title: "Http rule id"
+        minLength: 1
+        maxLength: 128
+      is_outer_service:
+        type: "boolean"
+        description: "是否已开启对外端口"
+        title: "Is outer service"
+      is_senior:
+        type: "boolean"
+        description: "是否有高级路由"
+        title: "Is senior"
+      protocol:
+        type: "string"
+        description: "域名类型 http https httptphttps httpandhttps"
+        title: "Protocol"
+        minLength: 1
+        maxLength: 15
+      region_id:
+        type: "string"
+        description: "region id"
+        title: "Region id"
+        minLength: 1
+        maxLength: 36
+      rule_extensions:
+        type: "string"
+        description: "扩展功能"
+        title: "Rule extensions"
+      service_alias:
+        type: "string"
+        description: "组件别名"
+        title: "Service alias"
+        minLength: 1
+        maxLength: 64
+      service_id:
+        type: "string"
+        description: "组件id"
+        title: "Service id"
+        minLength: 1
+        maxLength: 32
+      service_name:
+        type: "string"
+        description: "组件名"
+        title: "Service name"
+        minLength: 1
+        maxLength: 64
+      tenant_id:
+        type: "string"
+        description: "租户id"
+        title: "Tenant id"
+        minLength: 1
+        maxLength: 32
+      the_weight:
+        type: "integer"
+        description: "权重"
+        title: "The weight"
+        minimum: -2147483648
+        maximum: 2147483647
+      type:
+        type: "integer"
+        description: "类型（默认：0， 自定义：1）"
+        title: "Type"
+        minimum: -2147483648
+        maximum: 2147483647
+    example:
+      tenant_id: "tenant_id"
+      container_port: -1517921766
+      domain_type: "domain_type"
+      rule_extensions: "rule_extensions"
+      service_alias: "service_alias"
+      create_time: "2000-01-23T04:56:07.000+00:00"
+      http_rule_id: "http_rule_id"
+      is_outer_service: true
+      service_name: "service_name"
+      region_id: "region_id"
+      the_weight: 413233370
+      auto_ssl_config: "auto_ssl_config"
+      domain_heander: "domain_heander"
+      type: 273751188
+      is_senior: true
+      certificate_id: 441289069
+      domain_name: "domain_name"
+      protocol: "protocol"
+      domain_cookie: "domain_cookie"
+      domain_path: "domain_path"
+      service_id: "service_id"
+      auto_ssl: true
+      ID: 0
+  Install:
+    type: "object"
+    required:
+    - "order_id"
+    properties:
+      order_id:
+        type: "string"
+        description: "订单ID,通过订单ID去市场下载安装的应用元数据"
+        title: "Order id"
+        minLength: 1
+        maxLength: 36
+    example:
+      order_id: "order_id"
+  ListAnnouncementResp:
+    type: "object"
+    required:
+    - "announcements"
+    - "total"
+    properties:
+      announcements:
+        type: "array"
+        items:
+          $ref: "#/definitions/AnnouncementRespSerilizer"
+      total:
+        type: "integer"
+        title: "Total"
+    example:
+      total: 0
+      announcements:
+      - a_tag_url: "a_tag_url"
+        level: "level"
+        active: true
+        announcement_id: "announcement_id"
+        title: "title"
+        type: "type"
+        content: "content"
+        a_tag: "a_tag"
+      - a_tag_url: "a_tag_url"
+        level: "level"
+        active: true
+        announcement_id: "announcement_id"
+        title: "title"
+        type: "type"
+        content: "content"
+        a_tag: "a_tag"
+  ListAppStoreInfosResp:
+    type: "object"
+    required:
+    - "appstores"
+    - "total"
+    properties:
+      appstores:
+        type: "array"
+        items:
+          $ref: "#/definitions/AppStoreInfo"
+      total:
+        type: "integer"
+        description: "总数"
+        title: "Total"
+    example:
+      total: 0
+      appstores:
+      - enterprise_alias: "enterprise_alias"
+        appstore_name: "appstore_name"
+        access_url: "access_url"
+        enterprise_id: "enterprise_id"
+        enterprise_name: "enterprise_name"
+      - enterprise_alias: "enterprise_alias"
+        appstore_name: "appstore_name"
+        access_url: "access_url"
+        enterprise_id: "enterprise_id"
+        enterprise_name: "enterprise_name"
+  ListEntsResp:
+    type: "object"
+    required:
+    - "ents"
+    - "total"
+    properties:
+      ents:
+        type: "array"
+        items:
+          $ref: "#/definitions/EnterpriseInfo"
+      total:
+        type: "integer"
+        description: "总数"
+        title: "Total"
+    example:
+      total: 0
+      ents:
+      - create_time: "2000-01-23T04:56:07.000+00:00"
+        enterprise_alias: "enterprise_alias"
+        enterprise_id: "enterprise_id"
+        enterprise_name: "enterprise_name"
+      - create_time: "2000-01-23T04:56:07.000+00:00"
+        enterprise_alias: "enterprise_alias"
+        enterprise_id: "enterprise_id"
+        enterprise_name: "enterprise_name"
+  ListRegionTeamServices:
+    type: "object"
+    required:
+    - "services"
+    - "total"
+    properties:
+      services:
+        type: "array"
+        items:
+          $ref: "#/definitions/TeamServicesResp"
+      total:
+        type: "integer"
+        title: "Total"
+    example:
+      total: 0
+      services:
+      - service_type: "service_type"
+        tenant_name: "tenant_name"
+        update_time: "2000-01-23T04:56:07.000+00:00"
+        service_alias: "service_alias"
+        group_id: "group_id"
+        group_name: "group_name"
+        service_cname: "service_cname"
+        service_id: "service_id"
+        region_id: "region_id"
+        deploy_version: "deploy_version"
+      - service_type: "service_type"
+        tenant_name: "tenant_name"
+        update_time: "2000-01-23T04:56:07.000+00:00"
+        service_alias: "service_alias"
+        group_id: "group_id"
+        group_name: "group_name"
+        service_cname: "service_cname"
+        service_id: "service_id"
+        region_id: "region_id"
+        deploy_version: "deploy_version"
+  ListServiceEventsResponse:
+    type: "object"
+    required:
+    - "events"
+    - "page"
+    - "page_size"
+    - "total"
+    properties:
+      events:
+        type: "array"
+        items:
+          $ref: "#/definitions/AppServiceEvents"
+      page:
+        type: "integer"
+        description: "当前页数"
+        title: "Page"
+      page_size:
+        type: "integer"
+        description: "每页数量"
+        title: "Page size"
+      total:
+        type: "integer"
+        description: "数据总数"
+        title: "Total"
+    example:
+      total: 1
+      page: 0
+      events:
+      - Status: "Status"
+        UserName: "UserName"
+        EndTime: "EndTime"
+        Message: "Message"
+        create_time: "create_time"
+        StartTime: "StartTime"
+        TargetID: "TargetID"
+        ServiceID: "ServiceID"
+        Target: "Target"
+        TenantID: "TenantID"
+        SynType: "SynType"
+        OptType: "OptType"
+        EventID: "EventID"
+        ID: "ID"
+        FinalStatus: "FinalStatus"
+        RequestBody: "RequestBody"
+      - Status: "Status"
+        UserName: "UserName"
+        EndTime: "EndTime"
+        Message: "Message"
+        create_time: "create_time"
+        StartTime: "StartTime"
+        TargetID: "TargetID"
+        ServiceID: "ServiceID"
+        Target: "Target"
+        TenantID: "TenantID"
+        SynType: "SynType"
+        OptType: "OptType"
+        EventID: "EventID"
+        ID: "ID"
+        FinalStatus: "FinalStatus"
+        RequestBody: "RequestBody"
+      page_size: 6
+  ListTeamRegionsResp:
+    type: "object"
+    required:
+    - "regions"
+    - "total"
+    properties:
+      regions:
+        type: "array"
+        items:
+          $ref: "#/definitions/TeamRegionsResp"
+      total:
+        type: "integer"
+        title: "Total"
+    example:
+      total: 0
+      regions:
+      - tcpdomain: "tcpdomain"
+        httpdomain: "httpdomain"
+        tenant_name: "tenant_name"
+        key_file: "key_file"
+        cert_file: "cert_file"
+        region_id: "region_id"
+        url: "url"
+        region_alias: "region_alias"
+        token: "token"
+        wsurl: "wsurl"
+        ssl_ca_cert: "ssl_ca_cert"
+        scope: "private"
+        region_name: "region_name"
+        desc: "desc"
+        status: "status"
+      - tcpdomain: "tcpdomain"
+        httpdomain: "httpdomain"
+        tenant_name: "tenant_name"
+        key_file: "key_file"
+        cert_file: "cert_file"
+        region_id: "region_id"
+        url: "url"
+        region_alias: "region_alias"
+        token: "token"
+        wsurl: "wsurl"
+        ssl_ca_cert: "ssl_ca_cert"
+        scope: "private"
+        region_name: "region_name"
+        desc: "desc"
+        status: "status"
+  ListTeamResp:
+    type: "object"
+    required:
+    - "tenants"
+    properties:
+      tenants:
+        type: "array"
+        items:
+          $ref: "#/definitions/TeamInfo"
+      total:
+        type: "integer"
+        title: "Total"
+    example:
+      tenants:
+      - role_infos:
+        - role_name: "role_name"
+          role_id: 6
+        - role_name: "role_name"
+          role_id: 6
+        tenant_id: "tenant_id"
+        tenant_name: "tenant_name"
+        is_active: true
+        create_time: "2000-01-23T04:56:07.000+00:00"
+        creater: "creater"
+        service_num: 1
+        region_num: 0
+        tenant_alias: "tenant_alias"
+        enterprise_id: "enterprise_id"
+      - role_infos:
+        - role_name: "role_name"
+          role_id: 6
+        - role_name: "role_name"
+          role_id: 6
+        tenant_id: "tenant_id"
+        tenant_name: "tenant_name"
+        is_active: true
+        create_time: "2000-01-23T04:56:07.000+00:00"
+        creater: "creater"
+        service_num: 1
+        region_num: 0
+        tenant_alias: "tenant_alias"
+        enterprise_id: "enterprise_id"
+      total: 5
+  ListTeamUsersResp:
+    type: "object"
+    required:
+    - "total"
+    - "users"
+    properties:
+      total:
+        type: "integer"
+        title: "Total"
+      users:
+        type: "array"
+        items:
+          $ref: "#/definitions/TeamUser"
+    example:
+      total: 0
+      users:
+      - role_infos:
+        - role_name: "role_name"
+          role_id: 6
+        - role_name: "role_name"
+          role_id: 6
+        is_active: true
+        origion: "origion"
+        phone: "phone"
+        user_id: 6
+        nick_name: "nick_name"
+        enterprise_id: "enterprise_id"
+        email: "email"
+      - role_infos:
+        - role_name: "role_name"
+          role_id: 6
+        - role_name: "role_name"
+          role_id: 6
+        is_active: true
+        origion: "origion"
+        phone: "phone"
+        user_id: 6
+        nick_name: "nick_name"
+        enterprise_id: "enterprise_id"
+        email: "email"
+  ListUsersRespView:
+    type: "object"
+    required:
+    - "total"
+    - "users"
+    properties:
+      total:
+        type: "integer"
+        title: "Total"
+      users:
+        type: "array"
+        items:
+          $ref: "#/definitions/UserInfo"
+    example:
+      total: 0
+      users:
+      - is_active: true
+        origion: "origion"
+        create_time: "2000-01-23T04:56:07.000+00:00"
+        phone: "phone"
+        user_id: 6
+        nick_name: "nick_name"
+        client_ip: "client_ip"
+        enterprise_id: "enterprise_id"
+        email: "email"
+      - is_active: true
+        origion: "origion"
+        create_time: "2000-01-23T04:56:07.000+00:00"
+        phone: "phone"
+        user_id: 6
+        nick_name: "nick_name"
+        client_ip: "client_ip"
+        enterprise_id: "enterprise_id"
+        email: "email"
+  NewBieGuideBaseResp:
+    type: "object"
+    properties:
+      enable:
+        type: "boolean"
+        title: "Enable"
+        default: false
+      value:
+        type: "string"
+        title: "Value"
+        maxLength: 225
+        x-nullable: true
+    title: "Newbie guide"
+    example:
+      enable: false
+      value: "value"
+  OAuthType:
+    type: "object"
+    required:
+    - "type"
+    properties:
+      type:
+        type: "string"
+        description: "oauth服务类型"
+        title: "Type"
+        maxLength: 64
+    example:
+      type: "type"
+  OauthServicesBaseResp:
+    type: "object"
+    properties:
+      enable:
+        type: "boolean"
+        title: "Enable"
+        default: false
+      value:
+        type: "array"
+        items:
+          $ref: "#/definitions/OauthServicesResp"
+    title: "Oauth services"
+    example:
+      enable: false
+      value:
+      - eid: "eid"
+        is_console: false
+        api_url: "api_url"
+        home_url: "home_url"
+        oauth_type: "oauth_type"
+        is_auto_login: false
+        is_deleted: false
+        is_git: false
+        enable: true
+        service_id: 0
+        name: "name"
+        access_token_url: "access_token_url"
+        auth_url: "auth_url"
+      - eid: "eid"
+        is_console: false
+        api_url: "api_url"
+        home_url: "home_url"
+        oauth_type: "oauth_type"
+        is_auto_login: false
+        is_deleted: false
+        is_git: false
+        enable: true
+        service_id: 0
+        name: "name"
+        access_token_url: "access_token_url"
+        auth_url: "auth_url"
+  OauthServicesResp:
+    type: "object"
+    required:
+    - "eid"
+    - "name"
+    - "oauth_type"
+    properties:
+      access_token_url:
+        type: "string"
+        title: "Access token url"
+        minLength: 1
+        maxLength: 255
+      api_url:
+        type: "string"
+        title: "Api url"
+        minLength: 1
+        maxLength: 255
+      auth_url:
+        type: "string"
+        title: "Auth url"
+        minLength: 1
+        maxLength: 255
+      eid:
+        type: "string"
+        title: "Eid"
+        minLength: 1
+        maxLength: 64
+      enable:
+        type: "boolean"
+        title: "Enable"
+        default: true
+      home_url:
+        type: "string"
+        title: "Home url"
+        maxLength: 255
+        x-nullable: true
+      is_auto_login:
+        type: "boolean"
+        title: "Is auto login"
+        default: false
+      is_console:
+        type: "boolean"
+        title: "Is console"
+        default: false
+      is_deleted:
+        type: "boolean"
+        title: "Is deleted"
+        default: false
+      is_git:
+        type: "boolean"
+        title: "Is git"
+        default: false
+      name:
+        type: "string"
+        title: "Name"
+        minLength: 1
+        maxLength: 64
+      oauth_type:
+        type: "string"
+        title: "Oauth type"
+        minLength: 1
+        maxLength: 64
+      service_id:
+        type: "integer"
+        title: "Service id"
+        x-nullable: true
+    example:
+      eid: "eid"
+      is_console: false
+      api_url: "api_url"
+      home_url: "home_url"
+      oauth_type: "oauth_type"
+      is_auto_login: false
+      is_deleted: false
+      is_git: false
+      enable: true
+      service_id: 0
+      name: "name"
+      access_token_url: "access_token_url"
+      auth_url: "auth_url"
+  ObjectStorageBaseResp:
+    type: "object"
+    properties:
+      enable:
+        type: "boolean"
+        title: "Enable"
+        default: false
+      value:
+        $ref: "#/definitions/ObjectStorageResp"
+    title: "Object storage"
+    example:
+      enable: false
+      value:
+        secret_key: "secret_key"
+        endpoint: "endpoint"
+        provider: "provider"
+        access_key: "access_key"
+        bucket_name: "bucket_name"
+  ObjectStorageResp:
+    type: "object"
+    required:
+    - "access_key"
+    - "bucket_name"
+    - "endpoint"
+    - "provider"
+    - "secret_key"
+    properties:
+      access_key:
+        type: "string"
+        title: "Access key"
+        maxLength: 255
+      bucket_name:
+        type: "string"
+        title: "Bucket name"
+        maxLength: 255
+      endpoint:
+        type: "string"
+        title: "Endpoint"
+        maxLength: 2047
+      provider:
+        type: "string"
+        title: "Provider"
+        maxLength: 255
+      secret_key:
+        type: "string"
+        title: "Secret key"
+        maxLength: 255
+    title: "Value"
+    example:
+      secret_key: "secret_key"
+      endpoint: "endpoint"
+      provider: "provider"
+      access_key: "access_key"
+      bucket_name: "bucket_name"
+  PostHTTPGatewayRule:
+    type: "object"
+    required:
+    - "container_port"
+    - "domain_name"
+    - "service_id"
+    properties:
+      auto_ssl:
+        type: "boolean"
+        description: "是否自动匹配证书，升级为https，如果开启，由外部服务完成升级"
+        title: "Auto ssl"
+        default: false
+      auto_ssl_config:
+        type: "boolean"
+        description: "自动分发证书配置"
+        title: "Auto ssl config"
+      certificate_id:
+        type: "integer"
+        description: "证书id"
+        title: "Certificate id"
+      container_port:
+        type: "integer"
+        description: "绑定端口"
+        title: "Container port"
+      domain_cookie:
+        type: "string"
+        description: "域名cookie"
+        title: "Domain cookie"
+        minLength: 1
+      domain_header:
+        type: "string"
+        description: "域名header"
+        title: "Domain header"
+        minLength: 1
+      domain_name:
+        type: "string"
+        description: "域名"
+        title: "Domain name"
+        minLength: 1
+        maxLength: 253
+      domain_path:
+        type: "string"
+        description: "域名路径"
+        title: "Domain path"
+        minLength: 1
+        default: "/"
+      rule_extensions:
+        type: "array"
+        description: "规则扩展"
+        items:
+          type: "string"
+      service_id:
+        type: "string"
+        description: "应用组件id"
+        title: "Service id"
+        minLength: 1
+      the_weight:
+        type: "integer"
+        title: "The weight"
+      whether_open:
+        type: "boolean"
+        description: "是否开放"
+        title: "Whether open"
+        default: false
+  RegionInfo:
+    type: "object"
+    required:
+    - "httpdomain"
+    - "region_alias"
+    - "region_id"
+    - "region_name"
+    - "status"
+    - "tcpdomain"
+    - "url"
+    - "wsurl"
+    properties:
+      cert_file:
+        type: "string"
+        description: "验证文件"
+        title: "Cert file"
+        x-nullable: true
+      desc:
+        type: "string"
+        description: "数据中心描述"
+        title: "Desc"
+        maxLength: 200
+      httpdomain:
+        type: "string"
+        description: "数据中心http应用访问根域名"
+        title: "Httpdomain"
+        minLength: 1
+        maxLength: 256
+      key_file:
+        type: "string"
+        description: "验证的key"
+        title: "Key file"
+        x-nullable: true
+      region_alias:
+        type: "string"
+        description: "数据中心别名"
+        title: "Region alias"
+        minLength: 1
+        maxLength: 64
+      region_id:
+        type: "string"
+        description: "region id"
+        title: "Region id"
+        minLength: 1
+        maxLength: 36
+      region_name:
+        type: "string"
+        description: "数据中心名称,不可修改"
+        title: "Region name"
+        minLength: 1
+        maxLength: 64
+      scope:
+        type: "string"
+        description: "数据中心范围 private|public"
+        title: "Scope"
+        minLength: 1
+        maxLength: 10
+      ssl_ca_cert:
+        type: "string"
+        description: "数据中心访问ca证书地址"
+        title: "Ssl ca cert"
+        x-nullable: true
+      status:
+        type: "string"
+        description: "数据中心状态 0：编辑中 1:启用 2：停用 3:维护中"
+        title: "Status"
+        minLength: 1
+        maxLength: 2
+      tcpdomain:
+        type: "string"
+        description: "数据中心tcp应用访问根域名"
+        title: "Tcpdomain"
+        minLength: 1
+        maxLength: 256
+      token:
+        type: "string"
+        description: "数据中心token"
+        title: "Token"
+        maxLength: 255
+        x-nullable: true
+      url:
+        type: "string"
+        description: "数据中心API url"
+        title: "Url"
+        minLength: 1
+        maxLength: 256
+      wsurl:
+        type: "string"
+        description: "数据中心Websocket url"
+        title: "Wsurl"
+        minLength: 1
+        maxLength: 256
+    example:
+      tcpdomain: "tcpdomain"
+      httpdomain: "httpdomain"
+      key_file: "key_file"
+      cert_file: "cert_file"
+      region_id: "region_id"
+      url: "url"
+      region_alias: "region_alias"
+      token: "token"
+      wsurl: "wsurl"
+      ssl_ca_cert: "ssl_ca_cert"
+      scope: "scope"
+      region_name: "region_name"
+      desc: "desc"
+      status: "status"
+  RegionInfoResp:
+    type: "object"
+    required:
+    - "desc"
+    - "region_alias"
+    - "region_name"
+    - "status"
+    - "url"
+    properties:
+      cert_file:
+        type: "string"
+        description: "api cert file"
+        title: "Cert file"
+        minLength: 1
+        maxLength: 65535
+        x-nullable: true
+      desc:
+        type: "string"
+        description: "集群描述"
+        title: "Desc"
+        maxLength: 128
+      httpdomain:
+        type: "string"
+        description: "集群http应用访问根域名"
+        title: "Httpdomain"
+        minLength: 1
+        maxLength: 256
+      key_file:
+        type: "string"
+        description: "api cert key file"
+        title: "Key file"
+        minLength: 1
+        maxLength: 65535
+        x-nullable: true
+      region_alias:
+        type: "string"
+        description: "集群别名"
+        title: "Region alias"
+        minLength: 1
+        maxLength: 32
+      region_id:
+        type: "string"
+        description: "region id"
+        title: "Region id"
+        minLength: 1
+        maxLength: 36
+      region_name:
+        type: "string"
+        description: "集群名称"
+        title: "Region name"
+        minLength: 1
+        maxLength: 32
+      scope:
+        type: "string"
+        description: "数据中心范围 private|public"
+        title: "Scope"
+        minLength: 1
+        maxLength: 10
+        default: "private"
+      ssl_ca_cert:
+        type: "string"
+        description: "api ca file"
+        title: "Ssl ca cert"
+        minLength: 1
+        maxLength: 65535
+        x-nullable: true
+      status:
+        type: "string"
+        description: "集群状态 0：编辑中 1:启用 2：停用 3:维护中"
+        title: "Status"
+        minLength: 1
+        maxLength: 2
+      tcpdomain:
+        type: "string"
+        description: "集群tcp应用访问根域名"
+        title: "Tcpdomain"
+        minLength: 1
+        maxLength: 256
+      url:
+        type: "string"
+        description: "集群API url"
+        title: "Url"
+        minLength: 1
+        maxLength: 256
+      wsurl:
+        type: "string"
+        description: "集群Websocket url"
+        title: "Wsurl"
+        minLength: 1
+        maxLength: 256
+    example:
+      tcpdomain: "tcpdomain"
+      httpdomain: "httpdomain"
+      key_file: "key_file"
+      cert_file: "cert_file"
+      region_id: "region_id"
+      url: "url"
+      region_alias: "region_alias"
+      wsurl: "wsurl"
+      ssl_ca_cert: "ssl_ca_cert"
+      scope: "private"
+      region_name: "region_name"
+      desc: "desc"
+      status: "status"
+  RoleInfo:
+    type: "object"
+    required:
+    - "role_id"
+    - "role_name"
+    properties:
+      role_id:
+        type: "integer"
+        description: "角色ID"
+        title: "Role id"
+      role_name:
+        type: "string"
+        description: "角色名称"
+        title: "Role name"
+        minLength: 1
+        maxLength: 32
+    description: "用户在团队中拥有的角色"
+    example:
+      role_name: "role_name"
+      role_id: 6
+  ServiceBaseInfo:
+    type: "object"
+    required:
+    - "category"
+    - "image"
+    - "service_alias"
+    - "service_id"
+    - "service_key"
+    - "service_region"
+    - "tenant_id"
+    - "version"
+    properties:
+      build_upgrade:
+        type: "boolean"
+        description: "组件构建后是否升级"
+        title: "Build upgrade"
+      category:
+        type: "string"
+        description: "组件分类：application,cache,store"
+        title: "Category"
+        minLength: 1
+        maxLength: 15
+      check_event_id:
+        type: "string"
+        description: "组件检测事件ID"
+        title: "Check event id"
+        maxLength: 32
+        x-nullable: true
+      check_uuid:
+        type: "string"
+        description: "组件检测ID"
+        title: "Check uuid"
+        maxLength: 36
+        x-nullable: true
+      cmd:
+        type: "string"
+        description: "启动参数"
+        title: "Cmd"
+        maxLength: 2048
+        x-nullable: true
+      code_from:
+        type: "string"
+        description: "代码来源:gitlab,github"
+        title: "Code from"
+        maxLength: 20
+        x-nullable: true
+      code_version:
+        type: "string"
+        description: "代码版本"
+        title: "Code version"
+        maxLength: 100
+        x-nullable: true
+      create_status:
+        type: "string"
+        description: "组件创建状态 creating|complete"
+        title: "Create status"
+        maxLength: 15
+        x-nullable: true
+      create_time:
+        type: "string"
+        format: "date-time"
+        description: "创建时间"
+        title: "Create time"
+        readOnly: true
+      creater:
+        type: "integer"
+        description: "组件创建者"
+        title: "Creater"
+        minimum: -2147483648
+        maximum: 2147483647
+      desc:
+        type: "string"
+        description: "描述"
+        title: "Desc"
+        maxLength: 200
+        x-nullable: true
+      docker_cmd:
+        type: "string"
+        description: "镜像创建命令"
+        title: "Docker cmd"
+        maxLength: 1024
+        x-nullable: true
+      expired_time:
+        type: "string"
+        format: "date-time"
+        description: "过期时间"
+        title: "Expired time"
+        x-nullable: true
+      extend_method:
+        type: "string"
+        description: "组件部署类型,stateless or state"
+        title: "Extend method"
+        enum:
+        - "不伸缩"
+        - "垂直伸缩"
+      git_project_id:
+        type: "integer"
+        description: "gitlab 中项目id"
+        title: "Git project id"
+        minimum: -2147483648
+        maximum: 2147483647
+      git_url:
+        type: "string"
+        description: "code代码仓库"
+        title: "Git url"
+        maxLength: 2047
+        x-nullable: true
+      image:
+        type: "string"
+        description: "镜像"
+        title: "Image"
+        minLength: 1
+        maxLength: 200
+      is_service:
+        type: "boolean"
+        description: "是否inner组件"
+        title: "Is service"
+      is_upgrate:
+        type: "boolean"
+        description: "是否可以更新"
+        title: "Is upgrate"
+      language:
+        type: "string"
+        description: "代码语言"
+        title: "Language"
+        maxLength: 40
+        x-nullable: true
+      min_cpu:
+        type: "integer"
+        description: "cpu个数"
+        title: "Min cpu"
+        minimum: -2147483648
+        maximum: 2147483647
+      min_memory:
+        type: "integer"
+        description: "内存大小单位（M）"
+        title: "Min memory"
+        minimum: -2147483648
+        maximum: 2147483647
+      min_node:
+        type: "integer"
+        description: "启动个数"
+        title: "Min node"
+        minimum: -2147483648
+        maximum: 2147483647
+      oauth_service_id:
+        type: "integer"
+        description: "拉取源码所用的OAuth服务id"
+        title: "Oauth service id"
+        minimum: -2147483648
+        maximum: 2147483647
+        x-nullable: true
+      open_webhooks:
+        type: "boolean"
+        description: "是否开启自动触发部署功能（兼容老版本组件）"
+        title: "Open webhooks"
+      server_type:
+        type: "string"
+        description: "源码仓库类型"
+        title: "Server type"
+        minLength: 1
+        maxLength: 5
+      service_alias:
+        type: "string"
+        description: "组件别名"
+        title: "Service alias"
+        minLength: 1
+        maxLength: 100
+      service_cname:
+        type: "string"
+        description: "组件名"
+        title: "Service cname"
+        minLength: 1
+        maxLength: 100
+      service_id:
+        type: "string"
+        description: "组件id"
+        title: "Service id"
+        minLength: 1
+        maxLength: 32
+      service_key:
+        type: "string"
+        description: "组件key"
+        title: "Service key"
+        minLength: 1
+        maxLength: 32
+      service_origin:
+        type: "string"
+        description: "组件创建类型cloud云市组件,assistant云帮组件"
+        title: "Service origin"
+        minLength: 1
+        maxLength: 15
+      service_region:
+        type: "string"
+        description: "组件所属区"
+        title: "Service region"
+        minLength: 1
+        maxLength: 64
+      service_source:
+        type: "string"
+        description: "组件来源(source_code, market, docker_run, docker_compose)"
+        title: "Service source"
+        maxLength: 15
+        x-nullable: true
+      service_type:
+        type: "string"
+        description: "组件类型:web,mysql,redis,mongodb,phpadmin"
+        title: "Service type"
+        maxLength: 50
+        x-nullable: true
+      status:
+        type: "string"
+        description: "组件状态"
+        title: "Status"
+        maxLength: 32
+        default: ""
+      tenant_id:
+        type: "string"
+        description: "租户id"
+        title: "Tenant id"
+        minLength: 1
+        maxLength: 32
+      tenant_service_group_id:
+        type: "integer"
+        description: "组件归属的组件组id"
+        title: "Tenant service group id"
+        minimum: -2147483648
+        maximum: 2147483647
+      total_memory:
+        type: "integer"
+        description: "内存使用M"
+        title: "Total memory"
+        minimum: -2147483648
+        maximum: 2147483647
+      update_time:
+        type: "string"
+        format: "date-time"
+        description: "更新时间"
+        title: "Update time"
+        readOnly: true
+      update_version:
+        type: "integer"
+        description: "内部发布次数"
+        title: "Update version"
+        minimum: -2147483648
+        maximum: 2147483647
+      version:
+        type: "string"
+        description: "版本"
+        title: "Version"
+        minLength: 1
+        maxLength: 255
+    example:
+      service_region: "service_region"
+      tenant_id: "tenant_id"
+      service_key: "service_key"
+      extend_method: "不伸缩"
+      service_alias: "service_alias"
+      min_memory: 413233370
+      check_event_id: "check_event_id"
+      service_cname: "service_cname"
+      check_uuid: "check_uuid"
+      expired_time: "2000-01-23T04:56:07.000+00:00"
+      language: "language"
+      is_service: true
+      open_webhooks: true
+      is_upgrate: true
+      update_time: "2000-01-23T04:56:07.000+00:00"
+      total_memory: 1847456234
+      min_cpu: -1517921766
+      code_version: "code_version"
+      oauth_service_id: -1158723813
+      service_id: "service_id"
+      git_url: "git_url"
+      image: "image"
+      docker_cmd: "docker_cmd"
+      service_source: "service_source"
+      create_time: "2000-01-23T04:56:07.000+00:00"
+      git_project_id: 441289069
+      service_origin: "service_origin"
+      tenant_service_group_id: 885365090
+      update_version: -594390510
+      version: "version"
+      build_upgrade: true
+      code_from: "code_from"
+      service_type: "service_type"
+      creater: -1803530559
+      create_status: "create_status"
+      cmd: "cmd"
+      category: "category"
+      min_node: 273751188
+      desc: "desc"
+      server_type: "server_type"
+      status: "status"
+  ServiceGroupOperations:
+    type: "object"
+    required:
+    - "action"
+    properties:
+      action:
+        type: "string"
+        description: "操作类型"
+        title: "Action"
+        enum:
+        - "stop"
+        - "start"
+        - "upgrade"
+        - "deploy"
+      service_ids:
+        type: "array"
+        description: "组件ID列表，不传值则操作应用下所有组件"
+        items:
+          type: "string"
+    example:
+      action: "stop"
+      service_ids:
+      - "service_ids"
+      - "service_ids"
+  Success:
+    type: "object"
+    required:
+    - "msg"
+    properties:
+      msg:
+        type: "string"
+        title: "Msg"
+        minLength: 1
+        maxLength: 300
+    example:
+      msg: "msg"
+  TeamAppsCloseSerializers:
+    type: "object"
+    properties:
+      service_ids:
+        type: "array"
+        items:
+          type: "string"
+    example:
+      service_ids:
+      - "service_ids"
+      - "service_ids"
+  TeamAppsResource:
+    type: "object"
+    required:
+    - "team_alias"
+    - "team_id"
+    - "team_name"
+    properties:
+      team_alias:
+        type: "string"
+        description: "团队昵称"
+        title: "Team alias"
+        minLength: 1
+        maxLength: 64
+      team_id:
+        type: "string"
+        description: "团队ID"
+        title: "Team id"
+        minLength: 1
+        maxLength: 64
+      team_name:
+        type: "string"
+        description: "团队名称"
+        title: "Team name"
+        minLength: 1
+        maxLength: 64
+      total_cpu:
+        type: "integer"
+        description: "cpu总额"
+        title: "Total cpu"
+      total_memory:
+        type: "integer"
+        description: "内存总额"
+        title: "Total memory"
+      used_cpu:
+        type: "integer"
+        description: "占用cpu"
+        title: "Used cpu"
+      used_cpu_percentage:
+        type: "number"
+        description: "占用cpu百分比"
+        title: "Used cpu percentage"
+      used_memory:
+        type: "integer"
+        description: "占用内存"
+        title: "Used memory"
+      used_memory_percentage:
+        type: "number"
+        description: "占用内存百分比"
+        title: "Used memory percentage"
+    example:
+      total_cpu: 0
+      total_memory: 6
+      used_cpu_percentage: 5.962133916683182377482808078639209270477294921875
+      used_memory_percentage: 2.3021358869347654518833223846741020679473876953125
+      team_alias: "team_alias"
+      used_memory: 5
+      team_id: "team_id"
+      used_cpu: 1
+      team_name: "team_name"
+  TeamBaseInfo:
+    type: "object"
+    required:
+    - "tenant_name"
+    properties:
+      ID:
+        type: "integer"
+        title: "ID"
+        readOnly: true
+      create_time:
+        type: "string"
+        format: "date-time"
+        description: "创建时间"
+        title: "Create time"
+        readOnly: true
+      creater:
+        type: "integer"
+        description: "租户创建者"
+        title: "Creater"
+        minimum: -2147483648
+        maximum: 2147483647
+      enterprise_id:
+        type: "string"
+        description: "企业id"
+        title: "Enterprise id"
+        maxLength: 32
+        x-nullable: true
+      expired_time:
+        type: "string"
+        format: "date-time"
+        description: "过期时间"
+        title: "Expired time"
+        x-nullable: true
+      is_active:
+        type: "boolean"
+        description: "激活状态"
+        title: "Is active"
+      limit_memory:
+        type: "integer"
+        description: "内存大小单位（M）"
+        title: "Limit memory"
+        minimum: -2147483648
+        maximum: 2147483647
+      region:
+        type: "string"
+        description: "区域中心,弃用"
+        title: "Region"
+        minLength: 1
+        maxLength: 64
+      tenant_alias:
+        type: "string"
+        description: "团队别名"
+        title: "Tenant alias"
+        maxLength: 64
+        x-nullable: true
+      tenant_id:
+        type: "string"
+        description: "租户id"
+        title: "Tenant id"
+        minLength: 1
+        maxLength: 33
+      tenant_name:
+        type: "string"
+        description: "租户名称"
+        title: "Tenant name"
+        minLength: 1
+        maxLength: 64
+      update_time:
+        type: "string"
+        format: "date-time"
+        description: "更新时间"
+        title: "Update time"
+        readOnly: true
+    example:
+      tenant_id: "tenant_id"
+      tenant_name: "tenant_name"
+      update_time: "2000-01-23T04:56:07.000+00:00"
+      is_active: true
+      create_time: "2000-01-23T04:56:07.000+00:00"
+      limit_memory: -1517921766
+      creater: 441289069
+      expired_time: "2000-01-23T04:56:07.000+00:00"
+      ID: 0
+      tenant_alias: "tenant_alias"
+      enterprise_id: "enterprise_id"
+      region: "region"
+  TeamCertificatesC:
+    type: "object"
+    required:
+    - "alias"
+    - "certificate"
+    - "certificate_type"
+    - "private_key"
+    properties:
+      alias:
+        type: "string"
+        description: "证书名称"
+        title: "Alias"
+        minLength: 1
+        maxLength: 64
+      certificate:
+        type: "string"
+        description: "证书key"
+        title: "Certificate"
+        minLength: 1
+        maxLength: 8192
+      certificate_type:
+        type: "string"
+        description: "证书类型"
+        title: "Certificate type"
+        minLength: 1
+        maxLength: 32
+      private_key:
+        type: "string"
+        description: "证书"
+        title: "Private key"
+        minLength: 1
+        maxLength: 8192
+    example:
+      certificate: "certificate"
+      alias: "alias"
+      private_key: "private_key"
+      certificate_type: "certificate_type"
+  TeamCertificatesL:
+    type: "object"
+    required:
+    - "list"
+    - "page"
+    - "page_size"
+    - "total"
+    properties:
+      list:
+        type: "array"
+        items:
+          $ref: "#/definitions/CertificatesR"
+      page:
+        type: "integer"
+        title: "Page"
+      page_size:
+        type: "integer"
+        title: "Page size"
+      total:
+        type: "integer"
+        title: "Total"
+    example:
+      total: 5
+      page: 6
+      list:
+      - has_expired: true
+        issued_by: "issued_by"
+        issued_to:
+        - "issued_to"
+        - "issued_to"
+        alias: "alias"
+        id: 0
+        certificate_type: "certificate_type"
+        end_data: "2000-01-23T04:56:07.000+00:00"
+      - has_expired: true
+        issued_by: "issued_by"
+        issued_to:
+        - "issued_to"
+        - "issued_to"
+        alias: "alias"
+        id: 0
+        certificate_type: "certificate_type"
+        end_data: "2000-01-23T04:56:07.000+00:00"
+      page_size: 1
+  TeamCertificatesR:
+    type: "object"
+    required:
+    - "alias"
+    - "certificate"
+    - "certificate_type"
+    - "id"
+    - "private_key"
+    properties:
+      alias:
+        type: "string"
+        description: "证书名称"
+        title: "Alias"
+        minLength: 1
+        maxLength: 64
+      certificate:
+        type: "string"
+        description: "证书key"
+        title: "Certificate"
+        minLength: 1
+        maxLength: 8192
+      certificate_type:
+        type: "string"
+        description: "证书类型"
+        title: "Certificate type"
+        minLength: 1
+        maxLength: 32
+      id:
+        type: "integer"
+        description: "id"
+        title: "Id"
+      private_key:
+        type: "string"
+        description: "证书"
+        title: "Private key"
+        minLength: 1
+        maxLength: 8192
+    example:
+      certificate: "certificate"
+      alias: "alias"
+      private_key: "private_key"
+      id: 0
+      certificate_type: "certificate_type"
+  TeamInfo:
+    type: "object"
+    required:
+    - "enterprise_id"
+    - "tenant_alias"
+    - "tenant_id"
+    - "tenant_name"
+    properties:
+      create_time:
+        type: "string"
+        format: "date-time"
+        description: "创建时间"
+        title: "Create time"
+      creater:
+        type: "string"
+        description: "团队拥有者用户"
+        title: "Creater"
+        minLength: 1
+      enterprise_id:
+        type: "string"
+        description: "企业ID"
+        title: "Enterprise id"
+        minLength: 1
+        maxLength: 32
+      is_active:
+        type: "boolean"
+        description: "是否激活"
+        title: "Is active"
+      region_num:
+        type: "integer"
+        description: "团队开通的数据中心数量"
+        title: "Region num"
+      role_infos:
+        type: "array"
+        description: "用户在团队中拥有的角色"
+        items:
+          $ref: "#/definitions/RoleInfo"
+      service_num:
+        type: "integer"
+        description: "团队的组件数量"
+        title: "Service num"
+      tenant_alias:
+        type: "string"
+        description: "团队别名"
+        title: "Tenant alias"
+        minLength: 1
+        maxLength: 24
+      tenant_id:
+        type: "string"
+        description: "团队ID"
+        title: "Tenant id"
+        minLength: 1
+        maxLength: 32
+      tenant_name:
+        type: "string"
+        description: "团队名称"
+        title: "Tenant name"
+        minLength: 1
+        maxLength: 24
+    example:
+      role_infos:
+      - role_name: "role_name"
+        role_id: 6
+      - role_name: "role_name"
+        role_id: 6
+      tenant_id: "tenant_id"
+      tenant_name: "tenant_name"
+      is_active: true
+      create_time: "2000-01-23T04:56:07.000+00:00"
+      creater: "creater"
+      service_num: 1
+      region_num: 0
+      tenant_alias: "tenant_alias"
+      enterprise_id: "enterprise_id"
+  TeamRegionReq:
+    type: "object"
+    properties:
+      region:
+        type: "string"
+        description: "数据中心名称"
+        title: "Region"
+        minLength: 1
+        maxLength: 24
+    example:
+      region: "region"
+  TeamRegionsResp:
+    type: "object"
+    required:
+    - "cert_file"
+    - "desc"
+    - "httpdomain"
+    - "key_file"
+    - "region_alias"
+    - "region_id"
+    - "region_name"
+    - "ssl_ca_cert"
+    - "status"
+    - "tcpdomain"
+    - "tenant_name"
+    - "url"
+    - "wsurl"
+    properties:
+      cert_file:
+        type: "string"
+        description: "验证文件"
+        title: "Cert file"
+        maxLength: 65535
+      desc:
+        type: "string"
+        description: "数据中心描述"
+        title: "Desc"
+        maxLength: 128
+      httpdomain:
+        type: "string"
+        description: "数据中心http应用访问根域名"
+        title: "Httpdomain"
+        minLength: 1
+        maxLength: 256
+      key_file:
+        type: "string"
+        description: "验证的key"
+        title: "Key file"
+        maxLength: 65535
+      region_alias:
+        type: "string"
+        description: "数据中心别名"
+        title: "Region alias"
+        minLength: 1
+        maxLength: 32
+      region_id:
+        type: "string"
+        description: "region id"
+        title: "Region id"
+        minLength: 1
+        maxLength: 36
+      region_name:
+        type: "string"
+        description: "数据中心名称"
+        title: "Region name"
+        minLength: 1
+        maxLength: 32
+      scope:
+        type: "string"
+        description: "数据中心范围 private|public"
+        title: "Scope"
+        minLength: 1
+        maxLength: 10
+        default: "private"
+      ssl_ca_cert:
+        type: "string"
+        description: "数据中心访问ca证书地址"
+        title: "Ssl ca cert"
+        maxLength: 65535
+      status:
+        type: "string"
+        description: "数据中心状态 0：编辑中 1:启用 2：停用 3:维护中"
+        title: "Status"
+        minLength: 1
+        maxLength: 2
+      tcpdomain:
+        type: "string"
+        description: "数据中心tcp应用访问根域名"
+        title: "Tcpdomain"
+        minLength: 1
+        maxLength: 256
+      tenant_name:
+        type: "string"
+        description: "租户名称"
+        title: "Tenant name"
+        minLength: 1
+        maxLength: 32
+      token:
+        type: "string"
+        description: "数据中心token"
+        title: "Token"
+        maxLength: 127
+        default: ""
+        x-nullable: true
+      url:
+        type: "string"
+        description: "数据中心API url"
+        title: "Url"
+        minLength: 1
+        maxLength: 256
+      wsurl:
+        type: "string"
+        description: "数据中心Websocket url"
+        title: "Wsurl"
+        minLength: 1
+        maxLength: 256
+    example:
+      tcpdomain: "tcpdomain"
+      httpdomain: "httpdomain"
+      tenant_name: "tenant_name"
+      key_file: "key_file"
+      cert_file: "cert_file"
+      region_id: "region_id"
+      url: "url"
+      region_alias: "region_alias"
+      token: "token"
+      wsurl: "wsurl"
+      ssl_ca_cert: "ssl_ca_cert"
+      scope: "private"
+      region_name: "region_name"
+      desc: "desc"
+      status: "status"
+  TeamServicesResp:
+    type: "object"
+    required:
+    - "deploy_version"
+    - "group_id"
+    - "group_name"
+    - "region_id"
+    - "service_alias"
+    - "service_cname"
+    - "service_id"
+    - "service_type"
+    - "tenant_name"
+    - "update_time"
+    properties:
+      deploy_version:
+        type: "string"
+        description: "组件版本"
+        title: "Deploy version"
+        maxLength: 32
+      group_id:
+        type: "string"
+        description: "组id"
+        title: "Group id"
+        maxLength: 32
+      group_name:
+        type: "string"
+        description: "应用名称"
+        title: "Group name"
+        maxLength: 255
+      region_id:
+        type: "string"
+        description: "数据中心id"
+        title: "Region id"
+        maxLength: 36
+      service_alias:
+        type: "string"
+        description: "组件昵称"
+        title: "Service alias"
+        maxLength: 32
+      service_cname:
+        type: "string"
+        description: "组件名称"
+        title: "Service cname"
+        maxLength: 255
+      service_id:
+        type: "string"
+        description: "组件id"
+        title: "Service id"
+        maxLength: 64
+      service_type:
+        type: "string"
+        description: "组件类型"
+        title: "Service type"
+        maxLength: 255
+      tenant_name:
+        type: "string"
+        description: "租户名称"
+        title: "Tenant name"
+        maxLength: 32
+      update_time:
+        type: "string"
+        format: "date-time"
+        description: "更新日期"
+        title: "Update time"
+    example:
+      service_type: "service_type"
+      tenant_name: "tenant_name"
+      update_time: "2000-01-23T04:56:07.000+00:00"
+      service_alias: "service_alias"
+      group_id: "group_id"
+      group_name: "group_name"
+      service_cname: "service_cname"
+      service_id: "service_id"
+      region_id: "region_id"
+      deploy_version: "deploy_version"
+  TeamUser:
+    type: "object"
+    required:
+    - "role_infos"
+    - "user_id"
+    properties:
+      email:
+        type: "string"
+        description: "邮件地址"
+        title: "Email"
+        maxLength: 35
+        x-nullable: true
+      enterprise_id:
+        type: "string"
+        description: "enterprise_id"
+        title: "Enterprise id"
+        minLength: 1
+        maxLength: 32
+      is_active:
+        type: "boolean"
+        description: "激活状态"
+        title: "Is active"
+      nick_name:
+        type: "string"
+        description: "用户昵称"
+        title: "Nick name"
+        minLength: 1
+        maxLength: 24
+      origion:
+        type: "string"
+        description: "用户来源"
+        title: "Origion"
+        maxLength: 12
+        x-nullable: true
+      phone:
+        type: "string"
+        description: "手机号码"
+        title: "Phone"
+        maxLength: 11
+        x-nullable: true
+      role_infos:
+        type: "array"
+        items:
+          $ref: "#/definitions/RoleInfo"
+      user_id:
+        type: "integer"
+        title: "User id"
+    example:
+      role_infos:
+      - role_name: "role_name"
+        role_id: 6
+      - role_name: "role_name"
+        role_id: 6
+      is_active: true
+      origion: "origion"
+      phone: "phone"
+      user_id: 6
+      nick_name: "nick_name"
+      enterprise_id: "enterprise_id"
+      email: "email"
+  Token:
+    type: "object"
+    required:
+    - "token"
+    properties:
+      token:
+        type: "string"
+        title: "Token"
+        minLength: 1
+        maxLength: 64
+    example:
+      token: "token"
+  UpdAppStoreInfoReq:
+    type: "object"
+    required:
+    - "access_url"
+    properties:
+      access_url:
+        type: "string"
+        description: "应用市场API地址"
+        title: "Access url"
+        minLength: 1
+    example:
+      access_url: "access_url"
+  UpdateAncmReqSerilizer:
+    type: "object"
+    properties:
+      a_tag:
+        type: "string"
+        description: "A标签文字"
+        title: "A tag"
+        minLength: 0
+        maxLength: 256
+      a_tag_url:
+        type: "string"
+        description: "a标签跳转地址"
+        title: "A tag url"
+        minLength: 0
+        maxLength: 1024
+      active:
+        type: "boolean"
+        description: "通知是否启用"
+        title: "Active"
+        x-nullable: true
+      content:
+        type: "string"
+        description: "通知内容"
+        title: "Content"
+        minLength: 0
+        maxLength: 1000
+      level:
+        type: "string"
+        description: "通知的等级"
+        title: "Level"
+        minLength: 0
+        maxLength: 32
+      title:
+        type: "string"
+        description: "通知标题"
+        title: "Title"
+        minLength: 0
+        maxLength: 64
+      type:
+        type: "string"
+        description: "通知类型"
+        title: "Type"
+        minLength: 0
+        maxLength: 15
+    example:
+      a_tag_url: "a_tag_url"
+      level: "level"
+      active: true
+      title: "title"
+      type: "type"
+      content: "content"
+      a_tag: "a_tag"
+  UpdatePostHTTPGatewayRule:
+    type: "object"
+    required:
+    - "service_id"
+    properties:
+      auto_ssl:
+        type: "boolean"
+        description: "是否自动匹配证书，升级为https，如果开启，由外部服务完成升级"
+        title: "Auto ssl"
+      auto_ssl_config:
+        type: "boolean"
+        description: "自动分发证书配置"
+        title: "Auto ssl config"
+      certificate_id:
+        type: "integer"
+        description: "证书id"
+        title: "Certificate id"
+      container_port:
+        type: "integer"
+        description: "绑定端口"
+        title: "Container port"
+      domain_cookie:
+        type: "string"
+        description: "域名cookie"
+        title: "Domain cookie"
+        minLength: 1
+      domain_header:
+        type: "string"
+        description: "域名header"
+        title: "Domain header"
+        minLength: 1
+      domain_name:
+        type: "string"
+        description: "域名"
+        title: "Domain name"
+        minLength: 1
+        maxLength: 253
+      domain_path:
+        type: "string"
+        description: "域名路径"
+        title: "Domain path"
+        minLength: 1
+      rule_extensions:
+        type: "array"
+        description: "规则扩展"
+        items:
+          type: "string"
+      service_id:
+        type: "string"
+        description: "应用组件id"
+        title: "Service id"
+        minLength: 1
+      the_weight:
+        type: "integer"
+        title: "The weight"
+      whether_open:
+        type: "boolean"
+        description: "是否开放"
+        title: "Whether open"
+  UpdateRegionReq:
+    type: "object"
+    required:
+    - "httpdomain"
+    - "region_alias"
+    - "status"
+    - "tcpdomain"
+    - "url"
+    - "wsurl"
+    properties:
+      cert_file:
+        type: "string"
+        description: "验证文件"
+        title: "Cert file"
+        x-nullable: true
+      desc:
+        type: "string"
+        description: "数据中心描述"
+        title: "Desc"
+        maxLength: 200
+      httpdomain:
+        type: "string"
+        description: "数据中心http应用访问根域名"
+        title: "Httpdomain"
+        minLength: 1
+        maxLength: 256
+      key_file:
+        type: "string"
+        description: "验证的key"
+        title: "Key file"
+        x-nullable: true
+      region_alias:
+        type: "string"
+        description: "数据中心别名"
+        title: "Region alias"
+        minLength: 1
+        maxLength: 64
+      scope:
+        type: "string"
+        description: "数据中心范围 private|public"
+        title: "Scope"
+        minLength: 1
+        maxLength: 10
+      ssl_ca_cert:
+        type: "string"
+        description: "数据中心访问ca证书地址"
+        title: "Ssl ca cert"
+        x-nullable: true
+      status:
+        type: "string"
+        description: "数据中心状态 0：编辑中 1:启用 2：停用 3:维护中"
+        title: "Status"
+        minLength: 1
+        maxLength: 2
+      tcpdomain:
+        type: "string"
+        description: "数据中心tcp应用访问根域名"
+        title: "Tcpdomain"
+        minLength: 1
+        maxLength: 256
+      token:
+        type: "string"
+        description: "数据中心token"
+        title: "Token"
+        maxLength: 255
+        x-nullable: true
+      url:
+        type: "string"
+        description: "数据中心API url"
+        title: "Url"
+        minLength: 1
+        maxLength: 256
+      wsurl:
+        type: "string"
+        description: "数据中心Websocket url"
+        title: "Wsurl"
+        minLength: 1
+        maxLength: 256
+    example:
+      tcpdomain: "tcpdomain"
+      wsurl: "wsurl"
+      httpdomain: "httpdomain"
+      ssl_ca_cert: "ssl_ca_cert"
+      key_file: "key_file"
+      cert_file: "cert_file"
+      scope: "scope"
+      url: "url"
+      desc: "desc"
+      region_alias: "region_alias"
+      status: "status"
+      token: "token"
+  UpdateRegionStatusReq:
+    type: "object"
+    required:
+    - "status"
+    properties:
+      status:
+        type: "string"
+        description: "需要设置的集群状态, 可选值为: 'ONLINE', 'OFFLINE', 'MAINTAIN'(大小写不敏感)"
+        title: "Status"
+        minLength: 1
+    example:
+      status: "status"
+  UpdateTeamInfoReq:
+    type: "object"
+    properties:
+      creater:
+        type: "integer"
+        description: "团队拥有者用户ID"
+        title: "Creater"
+      enterprise_id:
+        type: "string"
+        description: "企业ID"
+        title: "Enterprise id"
+        minLength: 1
+        maxLength: 32
+      is_active:
+        type: "boolean"
+        description: "是否激活"
+        title: "Is active"
+      region:
+        type: "string"
+        description: "数据中心名称"
+        title: "Region"
+        minLength: 1
+        maxLength: 24
+      tenant_alias:
+        type: "string"
+        description: "团队别名"
+        title: "Tenant alias"
+        minLength: 1
+        maxLength: 24
+    example:
+      is_active: true
+      creater: 0
+      tenant_alias: "tenant_alias"
+      enterprise_id: "enterprise_id"
+      region: "region"
+  UpdateUser:
+    type: "object"
+    properties:
+      email:
+        type: "string"
+        format: "email"
+        description: "邮件地址"
+        title: "Email"
+        minLength: 1
+        maxLength: 35
+      enterprise_id:
+        type: "string"
+        description: "enterprise_id"
+        title: "Enterprise id"
+        minLength: 1
+        maxLength: 32
+      is_active:
+        type: "boolean"
+        description: "激活状态"
+        title: "Is active"
+        x-nullable: true
+      password:
+        type: "string"
+        description: "用户昵称"
+        title: "Password"
+        minLength: 8
+        maxLength: 16
+      phone:
+        type: "string"
+        description: "手机号码"
+        title: "Phone"
+        maxLength: 11
+    example:
+      password: "password"
+      is_active: true
+      phone: "phone"
+      enterprise_id: "enterprise_id"
+      email: "email"
+  UploadFileResp:
+    type: "object"
+    required:
+    - "file_url"
+    properties:
+      file_url:
+        type: "string"
+        description: "访问文件的URL"
+        title: "File url"
+        minLength: 1
+        maxLength: 1024
+    example:
+      file_url: "file_url"
+  UserInfo:
+    type: "object"
+    required:
+    - "user_id"
+    properties:
+      client_ip:
+        type: "string"
+        description: "注册ip"
+        title: "Client ip"
+        maxLength: 20
+        x-nullable: true
+      create_time:
+        type: "string"
+        format: "date-time"
+        description: "创建时间"
+        title: "Create time"
+      email:
+        type: "string"
+        description: "邮件地址"
+        title: "Email"
+        maxLength: 35
+        x-nullable: true
+      enterprise_id:
+        type: "string"
+        description: "enterprise_id"
+        title: "Enterprise id"
+        minLength: 1
+        maxLength: 32
+      is_active:
+        type: "boolean"
+        description: "激活状态"
+        title: "Is active"
+      nick_name:
+        type: "string"
+        description: "用户昵称"
+        title: "Nick name"
+        minLength: 1
+        maxLength: 24
+      origion:
+        type: "string"
+        description: "用户来源"
+        title: "Origion"
+        maxLength: 12
+        x-nullable: true
+      phone:
+        type: "string"
+        description: "手机号码"
+        title: "Phone"
+        maxLength: 11
+        x-nullable: true
+      user_id:
+        type: "integer"
+        title: "User id"
+    example:
+      is_active: true
+      origion: "origion"
+      create_time: "2000-01-23T04:56:07.000+00:00"
+      phone: "phone"
+      user_id: 6
+      nick_name: "nick_name"
+      client_ip: "client_ip"
+      enterprise_id: "enterprise_id"
+      email: "email"
+  AuthRequest:
+    type: "object"
+    required:
+    - "password"
+    - "username"
+    properties:
+      password:
+        type: "string"
+        description: "管理员密码"
+      username:
+        type: "string"
+        description: "管理员用户名"
+    title: "AuthRequest"
+    example:
+      password: "password"
+      username: "username"
+  AddRegionRequest:
+    type: "object"
+    required:
+    - "httpdomain"
+    - "region_alias"
+    - "region_name"
+    - "tcpdomain"
+    - "url"
+    - "wsurl"
+    properties:
+      cert_file:
+        type: "string"
+      desc:
+        type: "string"
+      httpdomain:
+        type: "string"
+      key_file:
+        type: "string"
+      region_alias:
+        type: "string"
+      region_name:
+        type: "string"
+      scope:
+        type: "string"
+      ssl_ca_cert:
+        type: "string"
+      status:
+        type: "integer"
+      tcpdomain:
+        type: "string"
+      url:
+        type: "string"
+      wsurl:
+        type: "string"
+    title: "AddRegionRequest"
+    example:
+      tcpdomain: "tcpdomain"
+      wsurl: "wsurl"
+      httpdomain: "httpdomain"
+      ssl_ca_cert: "ssl_ca_cert"
+      key_file: "key_file"
+      cert_file: "cert_file"
+      scope: "scope"
+      region_name: "region_name"
+      url: "url"
+      desc: "desc"
+      region_alias: "region_alias"
+      status: 0

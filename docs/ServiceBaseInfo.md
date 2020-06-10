@@ -1,0 +1,50 @@
+# ServiceBaseInfo
+
+## Properties
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**BuildUpgrade** | **bool** | 组件构建后是否升级 | [optional] [default to null]
+**Category** | **string** | 组件分类：application,cache,store | [default to null]
+**CheckEventId** | **string** | 组件检测事件ID | [optional] [default to null]
+**CheckUuid** | **string** | 组件检测ID | [optional] [default to null]
+**Cmd** | **string** | 启动参数 | [optional] [default to null]
+**CodeFrom** | **string** | 代码来源:gitlab,github | [optional] [default to null]
+**CodeVersion** | **string** | 代码版本 | [optional] [default to null]
+**CreateStatus** | **string** | 组件创建状态 creating|complete | [optional] [default to null]
+**CreateTime** | [**time.Time**](time.Time.md) | 创建时间 | [optional] [default to null]
+**Creater** | **int32** | 组件创建者 | [optional] [default to null]
+**Desc** | **string** | 描述 | [optional] [default to null]
+**DockerCmd** | **string** | 镜像创建命令 | [optional] [default to null]
+**ExpiredTime** | [**time.Time**](time.Time.md) | 过期时间 | [optional] [default to null]
+**ExtendMethod** | **string** | 组件部署类型,stateless or state | [optional] [default to null]
+**GitProjectId** | **int32** | gitlab 中项目id | [optional] [default to null]
+**GitUrl** | **string** | code代码仓库 | [optional] [default to null]
+**Image** | **string** | 镜像 | [default to null]
+**IsService** | **bool** | 是否inner组件 | [optional] [default to null]
+**IsUpgrate** | **bool** | 是否可以更新 | [optional] [default to null]
+**Language** | **string** | 代码语言 | [optional] [default to null]
+**MinCpu** | **int32** | cpu个数 | [optional] [default to null]
+**MinMemory** | **int32** | 内存大小单位（M） | [optional] [default to null]
+**MinNode** | **int32** | 启动个数 | [optional] [default to null]
+**OauthServiceId** | **int32** | 拉取源码所用的OAuth服务id | [optional] [default to null]
+**OpenWebhooks** | **bool** | 是否开启自动触发部署功能（兼容老版本组件） | [optional] [default to null]
+**ServerType** | **string** | 源码仓库类型 | [optional] [default to null]
+**ServiceAlias** | **string** | 组件别名 | [default to null]
+**ServiceCname** | **string** | 组件名 | [optional] [default to null]
+**ServiceId** | **string** | 组件id | [default to null]
+**ServiceKey** | **string** | 组件key | [default to null]
+**ServiceOrigin** | **string** | 组件创建类型cloud云市组件,assistant云帮组件 | [optional] [default to null]
+**ServiceRegion** | **string** | 组件所属区 | [default to null]
+**ServiceSource** | **string** | 组件来源(source_code, market, docker_run, docker_compose) | [optional] [default to null]
+**ServiceType** | **string** | 组件类型:web,mysql,redis,mongodb,phpadmin | [optional] [default to null]
+**Status** | **string** | 组件状态 | [optional] [default to null]
+**TenantId** | **string** | 租户id | [default to null]
+**TenantServiceGroupId** | **int32** | 组件归属的组件组id | [optional] [default to null]
+**TotalMemory** | **int32** | 内存使用M | [optional] [default to null]
+**UpdateTime** | [**time.Time**](time.Time.md) | 更新时间 | [optional] [default to null]
+**UpdateVersion** | **int32** | 内部发布次数 | [optional] [default to null]
+**Version** | **string** | 版本 | [default to null]
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+
