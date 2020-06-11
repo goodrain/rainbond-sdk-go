@@ -1,6 +1,5 @@
 # Go API client for swagger
 
-
 Rainbond open api
 
 ## Overview
@@ -27,7 +26,6 @@ Class | Method | HTTP request | Description
 *OpenapiAnnouncementApi* | [**OpenapiV1AnnouncementsDelete**](docs/OpenapiAnnouncementApi.md#openapiv1announcementsdelete) | **Delete** /openapi/v1/announcements/{aid} | 
 *OpenapiAnnouncementApi* | [**OpenapiV1AnnouncementsList**](docs/OpenapiAnnouncementApi.md#openapiv1announcementslist) | **Get** /openapi/v1/announcements | 
 *OpenapiAnnouncementApi* | [**OpenapiV1AnnouncementsUpdate**](docs/OpenapiAnnouncementApi.md#openapiv1announcementsupdate) | **Put** /openapi/v1/announcements/{aid} | 
-*OpenapiAppsApi* | [**OpenapiV1TeamsRegionsAppsCloseCreate**](docs/OpenapiAppsApi.md#openapiv1teamsregionsappsclosecreate) | **Post** /openapi/v1/teams/{team_id}/regions/{region_name}/apps/close | 
 *OpenapiAppsApi* | [**OpenapiV1TeamsRegionsAppsCopyCreate**](docs/OpenapiAppsApi.md#openapiv1teamsregionsappscopycreate) | **Post** /openapi/v1/teams/{team_id}/regions/{region_name}/apps/{app_id}/copy | 
 *OpenapiAppsApi* | [**OpenapiV1TeamsRegionsAppsCopyList**](docs/OpenapiAppsApi.md#openapiv1teamsregionsappscopylist) | **Get** /openapi/v1/teams/{team_id}/regions/{region_name}/apps/{app_id}/copy | 
 *OpenapiAppsApi* | [**OpenapiV1TeamsRegionsAppsCreate**](docs/OpenapiAppsApi.md#openapiv1teamsregionsappscreate) | **Post** /openapi/v1/teams/{team_id}/regions/{region_name}/apps | 
@@ -41,7 +39,6 @@ Class | Method | HTTP request | Description
 *OpenapiAppsApi* | [**OpenapiV1TeamsRegionsAppsServicesEventsList**](docs/OpenapiAppsApi.md#openapiv1teamsregionsappsserviceseventslist) | **Get** /openapi/v1/teams/{team_id}/regions/{region_name}/apps/{app_id}/services/{service_id}/events | 
 *OpenapiAppsApi* | [**OpenapiV1TeamsRegionsAppsServicesList**](docs/OpenapiAppsApi.md#openapiv1teamsregionsappsserviceslist) | **Get** /openapi/v1/teams/{team_id}/regions/{region_name}/apps/{app_id}/services | 
 *OpenapiAppsApi* | [**OpenapiV1TeamsRegionsAppsServicesRead**](docs/OpenapiAppsApi.md#openapiv1teamsregionsappsservicesread) | **Get** /openapi/v1/teams/{team_id}/regions/{region_name}/apps/{app_id}/services/{service_id} | 
-*OpenapiAppsApi* | [**OpenapiV1TeamsRegionsResourceList**](docs/OpenapiAppsApi.md#openapiv1teamsregionsresourcelist) | **Get** /openapi/v1/teams/{team_id}/regions/{region_name}/resource | 
 *OpenapiAppstoreApi* | [**OpenapiV1AppstoresList**](docs/OpenapiAppstoreApi.md#openapiv1appstoreslist) | **Get** /openapi/v1/appstores | 
 *OpenapiAppstoreApi* | [**OpenapiV1AppstoresUpdate**](docs/OpenapiAppstoreApi.md#openapiv1appstoresupdate) | **Put** /openapi/v1/appstores/{eid} | 
 *OpenapiAuthApi* | [**OpenapiV1AuthTokenCreate**](docs/OpenapiAuthApi.md#openapiv1authtokencreate) | **Post** /openapi/v1/auth-token | 
@@ -117,6 +114,7 @@ Class | Method | HTTP request | Description
  - [CreateTeamReq](docs/CreateTeamReq.md)
  - [CreateTeamUserReq](docs/CreateTeamUserReq.md)
  - [CreateUser](docs/CreateUser.md)
+ - [CustomJwt](docs/CustomJwt.md)
  - [EnterpriseConfigSeralizer](docs/EnterpriseConfigSeralizer.md)
  - [EnterpriseHttpGatewayRule](docs/EnterpriseHttpGatewayRule.md)
  - [EnterpriseInfo](docs/EnterpriseInfo.md)
@@ -129,7 +127,6 @@ Class | Method | HTTP request | Description
  - [ListAppStoreInfosResp](docs/ListAppStoreInfosResp.md)
  - [ListEntsResp](docs/ListEntsResp.md)
  - [ListRegionTeamServices](docs/ListRegionTeamServices.md)
- - [ListServiceEventsResponse](docs/ListServiceEventsResponse.md)
  - [ListTeamRegionsResp](docs/ListTeamRegionsResp.md)
  - [ListTeamResp](docs/ListTeamResp.md)
  - [ListTeamUsersResp](docs/ListTeamUsersResp.md)
@@ -147,8 +144,6 @@ Class | Method | HTTP request | Description
  - [ServiceBaseInfo](docs/ServiceBaseInfo.md)
  - [ServiceGroupOperations](docs/ServiceGroupOperations.md)
  - [Success](docs/Success.md)
- - [TeamAppsCloseSerializers](docs/TeamAppsCloseSerializers.md)
- - [TeamAppsResource](docs/TeamAppsResource.md)
  - [TeamBaseInfo](docs/TeamBaseInfo.md)
  - [TeamCertificatesC](docs/TeamCertificatesC.md)
  - [TeamCertificatesL](docs/TeamCertificatesL.md)

@@ -818,30 +818,6 @@ paths:
         200:
           schema:
             $ref: "#/definitions/AppBaseInfo"
-  /openapi/v1/teams/{team_id}/regions/{region_name}/apps/close:
-    post:
-      tags:
-      - "openapi-apps"
-      description: "批量关闭应用"
-      operationId: "openapi_v1_teams_regions_apps_close_create"
-      parameters:
-      - name: "region_name"
-        in: "path"
-        required: true
-        type: "string"
-        x-exportParamName: "RegionName"
-      - name: "team_id"
-        in: "path"
-        required: true
-        type: "string"
-        x-exportParamName: "TeamId"
-      - in: "body"
-        name: "data"
-        required: true
-        schema:
-          $ref: "#/definitions/TeamAppsCloseSerializers"
-        x-exportParamName: "Data"
-      responses: {}
   /openapi/v1/teams/{team_id}/regions/{region_name}/apps/{app_id}:
     get:
       tags:
@@ -889,16 +865,6 @@ paths:
         required: true
         type: "string"
         x-exportParamName: "TeamId"
-      - name: "force"
-        in: "query"
-        description: "强制删除"
-        required: false
-        type: "integer"
-        enum:
-        - 0
-        - 1
-        x-exportParamName: "Force"
-        x-optionalDataType: "Int32"
       responses: {}
   /openapi/v1/teams/{team_id}/regions/{region_name}/apps/{app_id}/copy:
     get:
@@ -1240,16 +1206,6 @@ paths:
         required: true
         type: "string"
         x-exportParamName: "TeamId"
-      - name: "force"
-        in: "query"
-        description: "强制删除"
-        required: false
-        type: "integer"
-        enum:
-        - 0
-        - 1
-        x-exportParamName: "Force"
-        x-optionalDataType: "Int32"
       responses: {}
   /openapi/v1/teams/{team_id}/regions/{region_name}/apps/{app_id}/services/{service_id}/events:
     get:
@@ -1282,41 +1238,20 @@ paths:
         in: "query"
         description: "页码"
         required: false
-        type: "integer"
+        type: "string"
         x-exportParamName: "Page"
-        x-optionalDataType: "Int32"
+        x-optionalDataType: "String"
       - name: "page_size"
         in: "query"
         description: "每页数量"
         required: false
-        type: "integer"
+        type: "string"
         x-exportParamName: "PageSize"
-        x-optionalDataType: "Int32"
+        x-optionalDataType: "String"
       responses:
         200:
           schema:
-            $ref: "#/definitions/ListServiceEventsResponse"
-  /openapi/v1/teams/{team_id}/regions/{region_name}/resource:
-    get:
-      tags:
-      - "openapi-apps"
-      description: "获取团队资源统计"
-      operationId: "openapi_v1_teams_regions_resource_list"
-      parameters:
-      - name: "region_name"
-        in: "path"
-        required: true
-        type: "string"
-        x-exportParamName: "RegionName"
-      - name: "team_id"
-        in: "path"
-        required: true
-        type: "string"
-        x-exportParamName: "TeamId"
-      responses:
-        200:
-          schema:
-            $ref: "#/definitions/TeamAppsResource"
+            $ref: "#/definitions/AppServiceEvents"
   /openapi/v1/teams/{team_id}/regions/{region_name}/services:
     get:
       tags:
@@ -2658,6 +2593,20 @@ definitions:
       nick_name: "nick_name"
       enterprise_id: "enterprise_id"
       email: "email"
+  CustomJWT:
+    type: "object"
+    required:
+    - "nick_name"
+    - "password"
+    properties:
+      nick_name:
+        type: "string"
+        title: "Nick name"
+        minLength: 1
+      password:
+        type: "string"
+        title: "Password"
+        minLength: 1
   EnterpriseConfigSeralizer:
     type: "object"
     properties:
@@ -3291,67 +3240,6 @@ definitions:
         service_id: "service_id"
         region_id: "region_id"
         deploy_version: "deploy_version"
-  ListServiceEventsResponse:
-    type: "object"
-    required:
-    - "events"
-    - "page"
-    - "page_size"
-    - "total"
-    properties:
-      events:
-        type: "array"
-        items:
-          $ref: "#/definitions/AppServiceEvents"
-      page:
-        type: "integer"
-        description: "当前页数"
-        title: "Page"
-      page_size:
-        type: "integer"
-        description: "每页数量"
-        title: "Page size"
-      total:
-        type: "integer"
-        description: "数据总数"
-        title: "Total"
-    example:
-      total: 1
-      page: 0
-      events:
-      - Status: "Status"
-        UserName: "UserName"
-        EndTime: "EndTime"
-        Message: "Message"
-        create_time: "create_time"
-        StartTime: "StartTime"
-        TargetID: "TargetID"
-        ServiceID: "ServiceID"
-        Target: "Target"
-        TenantID: "TenantID"
-        SynType: "SynType"
-        OptType: "OptType"
-        EventID: "EventID"
-        ID: "ID"
-        FinalStatus: "FinalStatus"
-        RequestBody: "RequestBody"
-      - Status: "Status"
-        UserName: "UserName"
-        EndTime: "EndTime"
-        Message: "Message"
-        create_time: "create_time"
-        StartTime: "StartTime"
-        TargetID: "TargetID"
-        ServiceID: "ServiceID"
-        Target: "Target"
-        TenantID: "TenantID"
-        SynType: "SynType"
-        OptType: "OptType"
-        EventID: "EventID"
-        ID: "ID"
-        FinalStatus: "FinalStatus"
-        RequestBody: "RequestBody"
-      page_size: 6
   ListTeamRegionsResp:
     type: "object"
     required:
@@ -4343,76 +4231,6 @@ definitions:
         maxLength: 300
     example:
       msg: "msg"
-  TeamAppsCloseSerializers:
-    type: "object"
-    properties:
-      service_ids:
-        type: "array"
-        items:
-          type: "string"
-    example:
-      service_ids:
-      - "service_ids"
-      - "service_ids"
-  TeamAppsResource:
-    type: "object"
-    required:
-    - "team_alias"
-    - "team_id"
-    - "team_name"
-    properties:
-      team_alias:
-        type: "string"
-        description: "团队昵称"
-        title: "Team alias"
-        minLength: 1
-        maxLength: 64
-      team_id:
-        type: "string"
-        description: "团队ID"
-        title: "Team id"
-        minLength: 1
-        maxLength: 64
-      team_name:
-        type: "string"
-        description: "团队名称"
-        title: "Team name"
-        minLength: 1
-        maxLength: 64
-      total_cpu:
-        type: "integer"
-        description: "cpu总额"
-        title: "Total cpu"
-      total_memory:
-        type: "integer"
-        description: "内存总额"
-        title: "Total memory"
-      used_cpu:
-        type: "integer"
-        description: "占用cpu"
-        title: "Used cpu"
-      used_cpu_percentage:
-        type: "number"
-        description: "占用cpu百分比"
-        title: "Used cpu percentage"
-      used_memory:
-        type: "integer"
-        description: "占用内存"
-        title: "Used memory"
-      used_memory_percentage:
-        type: "number"
-        description: "占用内存百分比"
-        title: "Used memory percentage"
-    example:
-      total_cpu: 0
-      total_memory: 6
-      used_cpu_percentage: 5.962133916683182377482808078639209270477294921875
-      used_memory_percentage: 2.3021358869347654518833223846741020679473876953125
-      team_alias: "team_alias"
-      used_memory: 5
-      team_id: "team_id"
-      used_cpu: 1
-      team_name: "team_name"
   TeamBaseInfo:
     type: "object"
     required:

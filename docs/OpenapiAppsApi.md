@@ -4,7 +4,6 @@ All URIs are relative to *http://0.0.0.0:7070*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**OpenapiV1TeamsRegionsAppsCloseCreate**](OpenapiAppsApi.md#OpenapiV1TeamsRegionsAppsCloseCreate) | **Post** /openapi/v1/teams/{team_id}/regions/{region_name}/apps/close | 
 [**OpenapiV1TeamsRegionsAppsCopyCreate**](OpenapiAppsApi.md#OpenapiV1TeamsRegionsAppsCopyCreate) | **Post** /openapi/v1/teams/{team_id}/regions/{region_name}/apps/{app_id}/copy | 
 [**OpenapiV1TeamsRegionsAppsCopyList**](OpenapiAppsApi.md#OpenapiV1TeamsRegionsAppsCopyList) | **Get** /openapi/v1/teams/{team_id}/regions/{region_name}/apps/{app_id}/copy | 
 [**OpenapiV1TeamsRegionsAppsCreate**](OpenapiAppsApi.md#OpenapiV1TeamsRegionsAppsCreate) | **Post** /openapi/v1/teams/{team_id}/regions/{region_name}/apps | 
@@ -18,38 +17,7 @@ Method | HTTP request | Description
 [**OpenapiV1TeamsRegionsAppsServicesEventsList**](OpenapiAppsApi.md#OpenapiV1TeamsRegionsAppsServicesEventsList) | **Get** /openapi/v1/teams/{team_id}/regions/{region_name}/apps/{app_id}/services/{service_id}/events | 
 [**OpenapiV1TeamsRegionsAppsServicesList**](OpenapiAppsApi.md#OpenapiV1TeamsRegionsAppsServicesList) | **Get** /openapi/v1/teams/{team_id}/regions/{region_name}/apps/{app_id}/services | 
 [**OpenapiV1TeamsRegionsAppsServicesRead**](OpenapiAppsApi.md#OpenapiV1TeamsRegionsAppsServicesRead) | **Get** /openapi/v1/teams/{team_id}/regions/{region_name}/apps/{app_id}/services/{service_id} | 
-[**OpenapiV1TeamsRegionsResourceList**](OpenapiAppsApi.md#OpenapiV1TeamsRegionsResourceList) | **Get** /openapi/v1/teams/{team_id}/regions/{region_name}/resource | 
 
-
-# **OpenapiV1TeamsRegionsAppsCloseCreate**
-> OpenapiV1TeamsRegionsAppsCloseCreate(ctx, regionName, teamId, data)
-
-
-批量关闭应用
-
-### Required Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-  **regionName** | **string**|  | 
-  **teamId** | **string**|  | 
-  **data** | [**TeamAppsCloseSerializers**](TeamAppsCloseSerializers.md)|  | 
-
-### Return type
-
- (empty response body)
-
-### Authorization
-
-[Bearer](../README.md#Bearer)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **OpenapiV1TeamsRegionsAppsCopyCreate**
 > AppCopyCRes OpenapiV1TeamsRegionsAppsCopyCreate(ctx, appId, regionName, teamId, data)
@@ -143,7 +111,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **OpenapiV1TeamsRegionsAppsDelete**
-> OpenapiV1TeamsRegionsAppsDelete(ctx, appId, regionName, teamId, optional)
+> OpenapiV1TeamsRegionsAppsDelete(ctx, appId, regionName, teamId)
 
 
 删除应用
@@ -156,17 +124,6 @@ Name | Type | Description  | Notes
   **appId** | **string**|  | 
   **regionName** | **string**|  | 
   **teamId** | **string**|  | 
- **optional** | ***OpenapiV1TeamsRegionsAppsDeleteOpts** | optional parameters | nil if no parameters
-
-### Optional Parameters
-Optional parameters are passed through a pointer to a OpenapiV1TeamsRegionsAppsDeleteOpts struct
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
-
- **force** | **optional.Int32**| 强制删除 | 
 
 ### Return type
 
@@ -346,7 +303,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **OpenapiV1TeamsRegionsAppsServicesDelete**
-> OpenapiV1TeamsRegionsAppsServicesDelete(ctx, appId, regionName, serviceId, teamId, optional)
+> OpenapiV1TeamsRegionsAppsServicesDelete(ctx, appId, regionName, serviceId, teamId)
 
 
 删除组件
@@ -360,18 +317,6 @@ Name | Type | Description  | Notes
   **regionName** | **string**|  | 
   **serviceId** | **string**|  | 
   **teamId** | **string**|  | 
- **optional** | ***OpenapiV1TeamsRegionsAppsServicesDeleteOpts** | optional parameters | nil if no parameters
-
-### Optional Parameters
-Optional parameters are passed through a pointer to a OpenapiV1TeamsRegionsAppsServicesDeleteOpts struct
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
-
-
- **force** | **optional.Int32**| 强制删除 | 
 
 ### Return type
 
@@ -389,7 +334,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **OpenapiV1TeamsRegionsAppsServicesEventsList**
-> ListServiceEventsResponse OpenapiV1TeamsRegionsAppsServicesEventsList(ctx, appId, regionName, serviceId, teamId, optional)
+> AppServiceEvents OpenapiV1TeamsRegionsAppsServicesEventsList(ctx, appId, regionName, serviceId, teamId, optional)
 
 
 查询组件事件信息
@@ -414,12 +359,12 @@ Name | Type | Description  | Notes
 
 
 
- **page** | **optional.Int32**| 页码 | 
- **pageSize** | **optional.Int32**| 每页数量 | 
+ **page** | **optional.String**| 页码 | 
+ **pageSize** | **optional.String**| 每页数量 | 
 
 ### Return type
 
-[**ListServiceEventsResponse**](ListServiceEventsResponse.md)
+[**AppServiceEvents**](AppServiceEvents.md)
 
 ### Authorization
 
@@ -481,35 +426,6 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ServiceBaseInfo**](ServiceBaseInfo.md)
-
-### Authorization
-
-[Bearer](../README.md#Bearer)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **OpenapiV1TeamsRegionsResourceList**
-> TeamAppsResource OpenapiV1TeamsRegionsResourceList(ctx, regionName, teamId)
-
-
-获取团队资源统计
-
-### Required Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-  **regionName** | **string**|  | 
-  **teamId** | **string**|  | 
-
-### Return type
-
-[**TeamAppsResource**](TeamAppsResource.md)
 
 ### Authorization
 
